@@ -10,7 +10,8 @@ import useColorScheme from '../hooks/useColorScheme';
 import Home from '../screens/HomeScreen';
 import ContactScreen from '../screens/ContactScreen';
 import TransactionsOverviewScreen from '../screens/TransactionsOverviewScreen';
-import ProfileScreen from '../screens/ProfileScreen';
+import ProfileScreen from '../screens/ProfileScreen'; 
+import LoginScreen from '../screens/LoginScreen';
 
 import TransactionDetailsScreen from '../screens/TransactionDetailsScreen';
 
@@ -142,6 +143,11 @@ function ProfileTabNavigation() {
       <ProfileStackNavigator.Screen
         name="Profile"
         component={ProfileScreen}
+        options={{ headerShown: false }}
+      />
+      <ProfileStackNavigator.Screen
+        name="Login"
+        component={LoginScreen}
         options={{ headerShown: false }}
       />
     </ProfileStackNavigator.Navigator>
