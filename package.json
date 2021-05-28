@@ -26,6 +26,7 @@
     "expo-asset": "~8.2.1",
     "expo-constants": "~9.3.3",
     "expo-font": "~8.4.0",
+    "expo-linear-gradient": "~8.4.0",
     "expo-linking": "~2.0.0",
     "expo-splash-screen": "~0.8.1",
     "expo-status-bar": "~1.0.3",
@@ -42,8 +43,7 @@
     "react-native-screens": "~2.15.0",
     "react-native-web": "~0.13.12",
     "react-redux": "^7.2.2",
-    "redux": "^4.0.5",
-    "expo-linear-gradient": "~8.4.0"
+    "redux": "^4.0.5"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
