@@ -2,9 +2,9 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 
 import Login from "../components/login/Login";
-import { Text, View } from "../components/Themed";
+import { Text, View } from "../components/common/Themed";
 
-export default function ProfileScreen() {
+export default function LoginScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>

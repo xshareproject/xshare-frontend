@@ -1,22 +1,24 @@
-import * as WebBrowser from "expo-web-browser";
-import React, { useState, useCallback } from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import React, { useState, useCallback, useEffect } from "react";
+import { StyleSheet } from "react-native";
 import { Input, Icon, Button } from "react-native-elements";
 
-import Colors from "../../constants/Colors";
-import { MonoText } from "../StyledText";
-import { Text, View } from "../Themed";
+import { Text, View } from "../common/Themed";
 
 export default function Login({ path }: { path: string }) {
-  const [userName, setUserName] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isSending, setIsSending] = useState(false);
+
+  useEffect(() => {
+    return () => {
+      setIsSending(false);
+    };
+  }, []);
 
   const validateLogin = useCallback(() => {
     if (isSending) return;
     setIsSending(true);
-    setIsSending(false);
-  }, [isSending]); // update the callback if the state changes
+  }, [isSending]);
 
   return (
     <View style={styles.container}>
@@ -25,7 +27,7 @@ export default function Login({ path }: { path: string }) {
         <Input
           placeholder="Email"
           containerStyle={styles.input}
-          onChange={(value) => setUserName(value.nativeEvent.text)}
+          onChange={(value) => setUsername(value.nativeEvent.text)}
           leftIcon={<Icon name="person" type="ionicons" size={15} />}
         />
       </View>

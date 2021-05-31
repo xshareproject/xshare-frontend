@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 import { Button } from "react-native-elements";
 
 import EditScreenInfo from "../components/EditScreenInfo";
-import { Text, View } from "../components/Themed";
+import { Text, View } from "../components/common/Themed";
 import { NavigationProp } from "@react-navigation/native";
 
 interface ProfileProps {
@@ -20,12 +20,6 @@ export default function ProfileScreen(props: ProfileProps) {
         darkColor="rgba(255,255,255,0.1)"
       />
       <EditScreenInfo path="/screens/Profile.tsx" />
-      <Button
-        title="Login"
-        onPress={() => {
-          props.navigation.navigate("Login");
-        }}
-      />
     </View>
   );
 }
