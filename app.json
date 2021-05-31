@@ -19,6 +19,9 @@
       "**/*"
     ],
     "ios": {
+      "infoPlist": {
+        "NSContactsUsageDescription": "Allow Share to access your contacts"
+      },
       "supportsTablet": true
     },
     "web": {
