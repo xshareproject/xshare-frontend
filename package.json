@@ -26,6 +26,7 @@
     "expo-asset": "~8.2.1",
     "expo-constants": "~9.3.3",
     "expo-font": "~8.4.0",
+    "expo-linear-gradient": "~8.4.0",
     "expo-linking": "~2.0.0",
     "expo-splash-screen": "~0.8.1",
     "expo-status-bar": "~1.0.3",
@@ -34,6 +35,7 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz",
+    "react-native-contacts": "^7.0.0",
     "react-native-elements": "^2.1.0",
     "react-native-gesture-handler": "~1.8.0",
     "react-native-linear-gradient": "^2.5.6",
@@ -43,7 +45,8 @@
     "react-native-web": "~0.13.12",
     "react-redux": "^7.2.2",
     "redux": "^4.0.5",
-    "expo-linear-gradient": "~8.4.0"
+    "expo-contacts": "~8.6.0",
+    "expo-permissions": "~10.0.0"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
