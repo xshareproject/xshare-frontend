@@ -1,31 +1,18 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
-import {Button} from 'react-native-elements';
 
-import EditScreenInfo from '../components/EditScreenInfo';
+import Login from '../components/Login';
 import { Text, View } from '../components/Themed';
-import { NavigationProp } from '@react-navigation/native';
 
-interface ProfileProps {
-  navigation : NavigationProp<any>
-}
-
-
-export default function ProfileScreen(props : ProfileProps) {
+export default function ProfileScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Profile</Text>
+      <Text style={styles.title}>Login</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="/screens/Profile.tsx" />
-      <Button
-        title='Login'
-        onPress={() => {props.navigation.navigate('Login')}}
-      />
+      <Login path="/screens/Login.tsx" />
     </View>
   );
 }
-
-
 
 const styles = StyleSheet.create({
   container: {
