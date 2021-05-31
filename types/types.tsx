@@ -17,3 +17,8 @@ export type TabOneParamList = {
 export type TabTwoParamList = {
   TabTwoScreen: undefined;
 };
+
+export type GlobalContextType = {
+  authToken: string | undefined;
+  login: () => void;
+};

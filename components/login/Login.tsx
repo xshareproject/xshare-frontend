@@ -1,13 +1,22 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, {
+  useState,
+  useCallback,
+  useEffect,
+  useContext,
+  ContextType,
+} from "react";
 import { StyleSheet } from "react-native";
 import { Input, Icon, Button } from "react-native-elements";
 
 import { Text, View } from "../common/Themed";
+import { useGlobalContext } from "../../navigation/GlobalProvider";
 
 export default function Login({ path }: { path: string }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isSending, setIsSending] = useState(false);
+
+  const { login } = useGlobalContext();
 
   useEffect(() => {
     return () => {
@@ -16,8 +25,7 @@ export default function Login({ path }: { path: string }) {
   }, []);
 
   const validateLogin = useCallback(() => {
-    if (isSending) return;
-    setIsSending(true);
+    login();
   }, [isSending]);
 
   return (
