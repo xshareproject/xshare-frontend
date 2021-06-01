@@ -5,40 +5,6 @@ import ContactListHeader from '../components/ContactListHeader';
 import * as Contacts from 'expo-contacts';
 
 export default function ContactScreen(){
-  // state = {
-  //   status:null,
-  // }
-
-  // permissionFlow = async () => {
-  //   const { status } = await Permissions.askAsync(Permissions.CONTACTS);
-
-  //   this.setState({ status });
-
-  //   if (status !== 'granted') {
-  //     Linking.openURL('app-settings:');
-  //     return;
-  //   }
-
-  //   const { data } = await Contacts.getContactsAsync({ pageSize: 1 });
-  //   console.log(data);
-  // };
-
-  // useEffect(async () => {
-  //     const { status } = await Contacts.requestPermissionsAsync();
-  //     if (status === 'granted') {
-  //       const { data } = await Contacts.getContactsAsync({
-  //         fields: [Contacts.Fields.Name],
-  //       });
-
-  //       if (data.length > 0) {
-  //         const contact = data[0];
-  //         console.log(contact);
-  //       }
-        
-      
-      
-  //   }();
-  // }, []);
 
   const [contacts, setContacts] = useState([]);
 
@@ -46,7 +12,8 @@ export default function ContactScreen(){
     const { status } = await Contacts.requestPermissionsAsync();
     if (status === 'granted') {
       const { data } = await Contacts.getContactsAsync({
-        fields: [Contacts.Fields.Name],
+        fields: [Contacts.Fields.FirstName],
+        sort: Contacts.SortTypes.FirstName
       });
       console.log(data[0]);
       setContacts(data);
@@ -56,28 +23,13 @@ export default function ContactScreen(){
   useEffect(() => {
     fetchContacts();
   }, [])
-  // useEffect(() => {
-  //   (async () => {
-  //     const { status } = await Contacts.requestPermissionsAsync();
-  //     if (status === 'granted') {
-  //       const { data } = await Contacts.getContactsAsync({
-  //         fields: [Contacts.Fields.Name],
-  //       });
+
 
   //       if (status !== 'granted') {
   //             Linking.openURL('app-settings:');
   //             return;
   //           }
 
-  //       if (data.length > 0) {
-  //         const contact = data;
-  //         console.log(contact);
-  //       }
-  //     }
-  //   })();
-  // }, []);
-  const [searchTerm, setSearchTerm] = useState('')
-      
         return (
             <View style={styles.container}>
               <SafeAreaView />
@@ -85,9 +37,6 @@ export default function ContactScreen(){
               <TextInput style={styles.input} 
                 placeholder="Search"
                 placeholderTextColor="#969696"
-                onChange={event => {
-                  setSearchTerm(event.target.value);
-                }}
 
               />
               <FlatList style={styles.txt}
