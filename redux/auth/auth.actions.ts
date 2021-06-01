@@ -1,4 +1,3 @@
-import axios from "axios";
 import { Dispatch } from "react";
 import {
   AUTH_ERROR,
@@ -14,8 +13,9 @@ import {
 } from "../types/types.auth";
 
 export const login =
-  () => (dispatch: Dispatch<AuthAction>, getState: () => Auth) => {
+  (email: string, password: string) =>
+  (dispatch: Dispatch<AuthAction>, getState: () => any) => {
     const state = getState();
     dispatch({ type: USER_LOADING });
-    // handle api calls here
+    // handle api calls here, errors, etc
   };
