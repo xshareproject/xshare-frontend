@@ -10,7 +10,7 @@ const AUTH_ERROR_INITIAL_STATE: AuthError = {
   status: undefined,
 };
 
-const authErrorReducer = (
+export const authErrorReducer = (
   state = AUTH_ERROR_INITIAL_STATE,
   action: AuthErrorAction
 ): AuthError => {
@@ -29,5 +29,3 @@ const authErrorReducer = (
       return state;
   }
 };
-
-export default authErrorReducer;

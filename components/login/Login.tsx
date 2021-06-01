@@ -1,32 +1,28 @@
-import React, {
-  useState,
-  useCallback,
-  useEffect,
-  useContext,
-  ContextType,
-} from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { StyleSheet } from "react-native";
 import { Input, Icon, Button } from "react-native-elements";
+import { useDispatch, useSelector } from "react-redux";
+import { enable, login } from "../../redux/auth/auth.actions";
+import { AuthModel, AuthState } from "../../redux/types/types.auth";
 
 import { Text, View } from "../common/Themed";
-import { useGlobalContext } from "../../navigation/GlobalProvider";
 
-export default function Login({ path }: { path: string }) {
-  const [username, setUsername] = useState("");
+const Login = () => {
+  const dispatch = useDispatch();
+  const isLoading = useSelector<AuthState, AuthModel["isLoading"]>(
+    (state) => state.auth.isLoading
+  );
+
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isSending, setIsSending] = useState(false);
-
-  const { login } = useGlobalContext();
 
   useEffect(() => {
-    return () => {
-      setIsSending(false);
-    };
+    return () => {};
   }, []);
 
-  const validateLogin = useCallback(() => {
-    login();
-  }, [isSending]);
+  const validateLogin = () => {
+    dispatch(login(email, password));
+  };
 
   return (
     <View style={styles.container}>
@@ -35,7 +31,7 @@ export default function Login({ path }: { path: string }) {
         <Input
           placeholder="Email"
           containerStyle={styles.input}
-          onChange={(value) => setUsername(value.nativeEvent.text)}
+          onChange={(value) => setEmail(value.nativeEvent.text)}
           leftIcon={<Icon name="person" type="ionicons" size={15} />}
         />
       </View>
@@ -52,7 +48,6 @@ export default function Login({ path }: { path: string }) {
       <View style={{ marginTop: "5%" }}>
         <Button
           title="Login"
-          disabled={isSending}
           onPress={() => {
             validateLogin();
           }}
@@ -60,7 +55,7 @@ export default function Login({ path }: { path: string }) {
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -71,3 +66,5 @@ const styles = StyleSheet.create({
     width: "200%",
   },
 });
+
+export default Login;

@@ -15,10 +15,14 @@ export type AuthError = {
   status: number | undefined;
 };
 
-export type Auth = {
+export type AuthModel = {
   token: string | undefined;
   isAuthenticated: boolean | undefined;
   isLoading: boolean;
+};
+
+export type AuthState = {
+  auth: AuthModel;
 };
 
 interface userLoading {
@@ -81,3 +85,5 @@ export type AuthAction =
   | registerFail
   | authError
   | logoutSuccess;
+
+export type AuthDispatch = () => void;

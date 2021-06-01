@@ -7,17 +7,21 @@ import {
   REGISTER_FAIL,
   REGISTER_SUCCESS,
   LOGOUT_SUCCESS,
-  Auth,
+  AuthState,
   AuthAction,
+  AuthModel,
 } from "../types/types.auth";
 
-const AUTH_INITIAL_STATE: Auth = {
+const AUTH_INITIAL_STATE: AuthModel = {
   token: undefined,
   isAuthenticated: undefined,
   isLoading: false,
 };
 
-const authReducer = (state = AUTH_INITIAL_STATE, action: AuthAction): Auth => {
+export const authReducer = (
+  state = AUTH_INITIAL_STATE,
+  action: AuthAction
+): AuthModel => {
   switch (action.type) {
     case USER_LOADING:
       return {

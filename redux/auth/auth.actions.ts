@@ -1,4 +1,3 @@
-import { Dispatch } from "react";
 import {
   AUTH_ERROR,
   USER_LOADED,
@@ -9,13 +8,12 @@ import {
   REGISTER_SUCCESS,
   LOGOUT_SUCCESS,
   AuthAction,
-  Auth,
 } from "../types/types.auth";
 
-export const login =
-  (email: string, password: string) =>
-  (dispatch: Dispatch<AuthAction>, getState: () => any) => {
-    const state = getState();
-    dispatch({ type: USER_LOADING });
-    // handle api calls here, errors, etc
-  };
+export const login = (email: string, password: string): AuthAction => {
+  console.log("LOGIN");
+
+  return { type: USER_LOADING };
+};
+
+export const enable = (): AuthAction => ({ type: USER_LOADED });
