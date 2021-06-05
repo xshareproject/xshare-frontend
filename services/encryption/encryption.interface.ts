@@ -1,7 +1,6 @@
 interface IEncryptionService {
-  privateKey: string;
-
   encryptWithPrivateKey: () => string;
+  encryptWithServerPublicKey: () => string;
 }
 
 export default IEncryptionService;

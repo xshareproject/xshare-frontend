@@ -5,13 +5,15 @@ import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
 import { Provider } from "react-redux";
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import { rootReducer } from "./redux/root.reducer";
+import thunk from "redux-thunk";
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
-  const store = createStore(rootReducer);
+  const store = createStore(rootReducer, {}, applyMiddleware(thunk));
+
   if (!isLoadingComplete) {
     return null;
   } else {

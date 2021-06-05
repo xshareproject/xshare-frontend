@@ -1,3 +1,4 @@
+import { Dispatch } from "redux";
 import {
   AUTH_ERROR,
   USER_LOADED,
@@ -10,10 +11,19 @@ import {
   AuthAction,
 } from "../types/types.auth";
 
-export const login = (email: string, password: string): AuthAction => {
-  console.log("LOGIN");
+export const setLoading: AuthAction = { type: USER_LOADING };
 
+export const login = (email: string, password: string) => {
+  console.log("login");
   return { type: USER_LOADING };
 };
 
-export const enable = (): AuthAction => ({ type: USER_LOADED });
+export const register = (): AuthAction => {
+  console.log("register");
+  return { type: USER_LOADING };
+};
+
+export const logout = (): AuthAction => {
+  console.log("logout");
+  return { type: USER_LOADING };
+};

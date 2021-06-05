@@ -1,13 +1,13 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, Dispatch } from "react";
 import { StyleSheet } from "react-native";
 import { Input, Icon, Button } from "react-native-elements";
 import { useDispatch, useSelector } from "react-redux";
-import { enable, login } from "../../redux/auth/auth.actions";
+import { login, setLoading } from "../../redux/auth/auth.actions";
 import { AuthModel, AuthState } from "../../redux/types/types.auth";
 
 import { Text, View } from "../common/Themed";
 
-const Login = () => {
+const Login = ({ path }: { path: string }) => {
   const dispatch = useDispatch();
   const isLoading = useSelector<AuthState, AuthModel["isLoading"]>(
     (state) => state.auth.isLoading
@@ -21,7 +21,8 @@ const Login = () => {
   }, []);
 
   const validateLogin = () => {
-    dispatch(login(email, password));
+    dispatch(setLoading);
+    // dispatch(login(email, password));
   };
 
   return (
@@ -31,6 +32,7 @@ const Login = () => {
         <Input
           placeholder="Email"
           containerStyle={styles.input}
+          style={styles.inputText}
           onChange={(value) => setEmail(value.nativeEvent.text)}
           leftIcon={<Icon name="person" type="ionicons" size={15} />}
         />
@@ -41,6 +43,7 @@ const Login = () => {
           placeholder="Password"
           containerStyle={styles.input}
           secureTextEntry={true}
+          style={styles.inputText}
           onChange={(value) => setPassword(value.nativeEvent.text)}
           leftIcon={<Icon name="locked" type="fontisto" size={15} />}
         />
@@ -48,6 +51,7 @@ const Login = () => {
       <View style={{ marginTop: "5%" }}>
         <Button
           title="Login"
+          disabled={isLoading}
           onPress={() => {
             validateLogin();
           }}
@@ -64,6 +68,9 @@ const styles = StyleSheet.create({
   input: {
     borderWidth: 1,
     width: "200%",
+  },
+  inputText: {
+    color: "white",
   },
 });
 

@@ -71,7 +71,11 @@ interface errorAction {
 }
 
 interface authSuccess {
-  payload: object | undefined;
+  payload: authPayload;
+}
+
+interface authPayload {
+  token: string | undefined;
 }
 
 export type AuthErrorAction = getErrorsAction | clearErrorsAction;
