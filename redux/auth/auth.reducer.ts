@@ -15,7 +15,6 @@ import {
 const AUTH_INITIAL_STATE: AuthModel = {
   token: undefined,
   isAuthenticated: undefined,
-  isLoading: false,
 };
 
 export const authReducer = (
@@ -23,15 +22,9 @@ export const authReducer = (
   action: AuthAction
 ): AuthModel => {
   switch (action.type) {
-    case USER_LOADING:
-      return {
-        ...state,
-        isLoading: true,
-      };
     case USER_LOADED:
       return {
         ...state,
-        isLoading: false,
         isAuthenticated: true,
       };
     case LOGIN_SUCCESS:
@@ -39,7 +32,6 @@ export const authReducer = (
       return {
         ...state,
         ...action.payload,
-        isLoading: false,
         isAuthenticated: true,
       };
     case AUTH_ERROR:
@@ -49,7 +41,6 @@ export const authReducer = (
       return {
         ...state,
         token: undefined,
-        isLoading: false,
         isAuthenticated: false,
       };
     default:

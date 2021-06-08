@@ -1,4 +1,3 @@
-export const USER_LOADING = "USER_LOADING";
 export const USER_LOADED = "USER_LOADED";
 export const AUTH_ERROR = "AUTH_ERROR";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
@@ -17,17 +16,12 @@ export type AuthError = {
 
 export type AuthModel = {
   token: string | undefined;
-  isAuthenticated: boolean | undefined;
-  isLoading: boolean;
+  isAuthenticated: boolean;
 };
 
 export type AuthState = {
   auth: AuthModel;
 };
-
-interface userLoading {
-  type: typeof USER_LOADING;
-}
 
 interface userLoaded {
   type: typeof USER_LOADED;
@@ -81,7 +75,6 @@ interface authPayload {
 export type AuthErrorAction = getErrorsAction | clearErrorsAction;
 
 export type AuthAction =
-  | userLoading
   | userLoaded
   | loginSuccess
   | registerSuccess

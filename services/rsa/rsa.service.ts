@@ -1,53 +1,36 @@
-import RSA from "node-rsa";
+import { RSA, KeyPair } from "react-native-rsa-native";
 
 class RsaService {
-  private readonly encryptFormat = "base64";
-  private readonly decryptFormat = "utf8";
-
-  private readonly privateFormat = "private";
-  private readonly publicFormat = "public";
-
-  public generateNoneRSA = (): RSA => {
-    const rsa = new RSA();
-
-    return rsa.generateKeyPair();
+  public generateNonceRSA = async (): Promise<KeyPair> => {
+    return await RSA.generateKeys(2048);
   };
 
-  private getRsaWithImportedPrivateKey = (privateKey: string) => {
-    const rsa = new RSA();
-    return rsa.importKey(privateKey, this.privateFormat);
+  public encryptWithPrivateKey = async (
+    privateKey: string,
+    data: string
+  ): Promise<string> => {
+    return await RSA.encrypt(data, privateKey);
   };
 
-  private getRsaWithImportedPublicKey = (publicKey: string) => {
-    const rsa = new RSA();
-    return rsa.importKey(publicKey, this.publicFormat);
+  public encryptWithPublicKey = async (
+    publicKey: string,
+    data: string
+  ): Promise<string> => {
+    return await RSA.encrypt(data, publicKey);
   };
 
-  public encryptWithPrivateKey = (privateKey: string, data: any) => {
-    const rsa = this.getRsaWithImportedPrivateKey(privateKey);
-
-    return rsa.encryptPrivate(data, this.encryptFormat);
-  };
-
-  public encryptWithPublicKey = (publicKey: string, data: any) => {
-    const rsa = this.getRsaWithImportedPublicKey(publicKey);
-
-    return rsa.encrypt(data, this.encryptFormat);
-  };
-
-  public decryptWithPrivateKey = (
+  public decryptWithPrivateKey = async (
     privateKey: string,
     encryptedData: string
-  ) => {
-    const rsa = this.getRsaWithImportedPrivateKey(privateKey);
-
-    return rsa.decrypt(encryptedData, this.decryptFormat);
+  ): Promise<string> => {
+    return await RSA.decrypt(encryptedData, privateKey);
   };
 
-  public decryptWithPublicKey = (publicKey: string, encryptedData: string) => {
-    const rsa = this.getRsaWithImportedPublicKey(publicKey);
-
-    return rsa.decryptPublic(encryptedData, this.decryptFormat);
+  public decryptWithPublicKey = async (
+    publicKey: string,
+    encryptedData: string
+  ): Promise<string> => {
+    return await RSA.decrypt(encryptedData, publicKey);
   };
 }
 

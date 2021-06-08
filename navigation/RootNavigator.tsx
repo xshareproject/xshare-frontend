@@ -5,6 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import BottomTabNavigator from "./BottomTabNavigator";
 import LoginScreen from "../screens/LoginScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
+import RegistrationScreen from "../screens/RegistrationScreen";
 import { useSelector } from "react-redux";
 import { AuthModel, AuthState } from "../redux/types/types.auth";
 
@@ -27,7 +28,10 @@ const RootNavigator = () => {
           />
         </>
       ) : (
-        <Stack.Screen name="Login" component={LoginScreen} />
+        <>
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Register" component={RegistrationScreen} />
+        </>
       )}
     </Stack.Navigator>
   );

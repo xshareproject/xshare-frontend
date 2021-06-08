@@ -1,28 +1,26 @@
 import React, { useState, useCallback, useEffect, Dispatch } from "react";
 import { StyleSheet } from "react-native";
 import { Input, Icon, Button } from "react-native-elements";
-import { useDispatch, useSelector } from "react-redux";
-import { login, setLoading } from "../../redux/auth/auth.actions";
-import { AuthModel, AuthState } from "../../redux/types/types.auth";
+import { useDispatch } from "react-redux";
 
 import { Text, View } from "../common/Themed";
 
-const Login = ({ path }: { path: string }) => {
+const Login = ({
+  path,
+  navigateToRegister,
+}: {
+  path: string;
+  navigateToRegister: Function;
+}) => {
   const dispatch = useDispatch();
-  const isLoading = useSelector<AuthState, AuthModel["isLoading"]>(
-    (state) => state.auth.isLoading
-  );
 
+  const [isLoading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  useEffect(() => {
-    return () => {};
-  }, []);
-
   const validateLogin = () => {
-    dispatch(setLoading);
-    // dispatch(login(email, password));
+    setLoading(true);
+    setLoading(false);
   };
 
   return (
@@ -33,7 +31,7 @@ const Login = ({ path }: { path: string }) => {
           placeholder="Email"
           containerStyle={styles.input}
           style={styles.inputText}
-          onChange={(value) => setEmail(value.nativeEvent.text)}
+          onChange={(event) => setEmail(event.nativeEvent.text)}
           leftIcon={<Icon name="person" type="ionicons" size={15} />}
         />
       </View>
@@ -44,17 +42,29 @@ const Login = ({ path }: { path: string }) => {
           containerStyle={styles.input}
           secureTextEntry={true}
           style={styles.inputText}
-          onChange={(value) => setPassword(value.nativeEvent.text)}
+          onChange={(event) => setPassword(event.nativeEvent.text)}
           leftIcon={<Icon name="locked" type="fontisto" size={15} />}
         />
       </View>
-      <View style={{ marginTop: "5%" }}>
+      <View
+        style={{
+          marginTop: "5%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
         <Button
           title="Login"
           disabled={isLoading}
           onPress={() => {
             validateLogin();
           }}
+        />
+        <Button
+          title="Register"
+          onPress={() => navigateToRegister()}
+          style={{ backgroundColor: "red" }}
         />
       </View>
     </View>

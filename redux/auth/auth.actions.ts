@@ -1,8 +1,9 @@
 import { Dispatch } from "redux";
+
+import { Credentials } from "../../services/register/register.interface";
 import {
   AUTH_ERROR,
   USER_LOADED,
-  USER_LOADING,
   LOGIN_FAIL,
   LOGIN_SUCCESS,
   REGISTER_FAIL,
@@ -10,20 +11,28 @@ import {
   LOGOUT_SUCCESS,
   AuthAction,
 } from "../types/types.auth";
-
-export const setLoading: AuthAction = { type: USER_LOADING };
+import registerService from "../../services/register/register.service";
 
 export const login = (email: string, password: string) => {
   console.log("login");
-  return { type: USER_LOADING };
+
+  return { type: USER_LOADED };
 };
 
-export const register = (): AuthAction => {
+export const register = async (
+  credentials: Credentials
+): Promise<AuthAction> => {
   console.log("register");
-  return { type: USER_LOADING };
+
+  await registerService.registerUser(credentials);
+
+  // login flow here
+
+  return { type: USER_LOADED };
 };
 
 export const logout = (): AuthAction => {
   console.log("logout");
-  return { type: USER_LOADING };
+
+  return { type: LOGOUT_SUCCESS };
 };

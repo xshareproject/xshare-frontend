@@ -1,24 +1,48 @@
 import { AxiosResponse } from "axios";
 import _ from "lodash";
 
-import ApiService from "../../api/api.serivce";
-import { PublicAndPrivateKeyPair } from "./register.interface";
+import RegisterApiService from "../../api/register/register.api.service";
+import decryptionService from "../decryption/decryption.service";
+import encryptionService from "../encryption/encryption.service";
+import rsaService from "../rsa/rsa.service";
+import {
+  PublicAndPrivateKeyPair,
+  Credentials,
+  WithNoncePublic,
+} from "./register.interface";
 
-class RegisterService extends ApiService {
-  private readonly registerPaths = {
-    register: "user/register",
-  };
+class RegisterService extends RegisterApiService {
+  public registerUser = async (credentials: Credentials) => {
+    const nonceKeys = await rsaService.generateNonceRSA();
+    const noncePrivateKey = nonceKeys.private;
 
-  public registerUser = async (
-    encryptedBody: string
-  ): Promise<PublicAndPrivateKeyPair> => {
-    const path = this.registerPaths.register;
+    const encryptedBody = await this.encrypteRequestBody(
+      { ...credentials, noncePublicKey: nonceKeys.public },
+      noncePrivateKey
+    );
 
-    const response = await this.post(path, encryptedBody);
+    const response = await this.register(encryptedBody);
 
     this.validateResponse(response);
 
-    return this.convertResponse(response);
+    const decryptedResponseBody = await this.decrypteResponseBody(
+      response.data,
+      noncePrivateKey
+    );
+
+    this.convertResponseAndStoreKeys(decryptedResponseBody);
+  };
+
+  private encrypteRequestBody = async (
+    credentials: Credentials & WithNoncePublic,
+    privateKey: string
+  ): Promise<string> => {
+    return await encryptionService.encryptWithServerPublicKey(
+      await rsaService.encryptWithPrivateKey(
+        privateKey,
+        JSON.stringify(credentials)
+      )
+    );
   };
 
   private validateResponse = (response: AxiosResponse) => {
@@ -29,10 +53,22 @@ class RegisterService extends ApiService {
     }
   };
 
-  private convertResponse = (
-    response: AxiosResponse
-  ): PublicAndPrivateKeyPair => {
-    return { publicKey: "", privateKey: "" };
+  private decrypteResponseBody = async (
+    responseData: any,
+    privateKey: string
+  ): Promise<string> => {
+    return await decryptionService.decryptWithServerPublicKey(
+      await rsaService.decryptWithPrivateKey(privateKey, responseData)
+    );
+  };
+
+  private convertResponseAndStoreKeys = (decryptedResponseBody: string) => {
+    const keys = JSON.parse(decryptedResponseBody);
+    this.storeUserKeys(keys);
+  };
+
+  private storeUserKeys = async (keys: PublicAndPrivateKeyPair) => {
+    // need to store it here somehow
   };
 }
 

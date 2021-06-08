@@ -1,10 +1,21 @@
 import * as React from "react";
 import { StyleSheet } from "react-native";
+import { NavigationProp } from "@react-navigation/native";
+import { RootStackParamList } from "../types/types";
 
 import Login from "../components/login/Login";
 import { Text, View } from "../components/common/Themed";
+import storageService from "../services/storage/storage.service";
 
-export default function LoginScreen() {
+export default function LoginScreen({
+  navigation,
+}: {
+  navigation: NavigationProp<any>;
+}) {
+  const navigateToRegister = () => {
+    navigation.navigate("Register");
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
@@ -13,7 +24,10 @@ export default function LoginScreen() {
         lightColor="#eee"
         darkColor="rgba(255,255,255,0.1)"
       />
-      <Login path="/screens/Login.tsx" />
+      <Login
+        path="/screens/Login.tsx"
+        navigateToRegister={navigateToRegister}
+      />
     </View>
   );
 }
