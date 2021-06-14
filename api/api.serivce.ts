@@ -1,8 +1,8 @@
 import Axios, { AxiosResponse } from "axios";
 import { BodyTypes, ParamsTypes } from "./api.types";
 
-abstract class ApiService {
-  private readonly BASE_URL: string = "https://a94432ad77a6.ngrok.io";
+class ApiService {
+  private readonly BASE_URL: string = "https://e53a0134c50a.ngrok.io";
 
   public post = (
     path: string,

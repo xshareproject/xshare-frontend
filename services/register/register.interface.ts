@@ -3,14 +3,17 @@ export interface PublicAndPrivateKeyPair {
   privateKey: string;
 }
 
-export interface Credentials {
+export interface RegisterCredentials extends Credentials {
   firstName: string;
   lastName: string;
-  email: string;
-  password: string;
   phoneNumber: string;
 }
 
 export interface WithNoncePublic {
   noncePublicKey: string;
+}
+
+export interface Credentials {
+  email: string;
+  password: string;
 }

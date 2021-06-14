@@ -5,32 +5,23 @@ import RegisterApiService from "../../api/register/register.api.service";
 import decryptionService from "../decryption/decryption.service";
 import encryptionService from "../encryption/encryption.service";
 import rsaService from "../rsa/rsa.service";
+import storageService from "../storage/storage.service";
 import {
   PublicAndPrivateKeyPair,
   Credentials,
   WithNoncePublic,
+  RegisterCredentials,
 } from "./register.interface";
 
 class RegisterService extends RegisterApiService {
-  public registerUser = async (credentials: Credentials) => {
-    const nonceKeys = await rsaService.generateNonceRSA();
-    const noncePrivateKey = nonceKeys.private;
-
-    const encryptedBody = await this.encrypteRequestBody(
-      { ...credentials, noncePublicKey: nonceKeys.public },
-      noncePrivateKey
-    );
-
-    const response = await this.register(encryptedBody);
+  public registerUser = async (credentials: RegisterCredentials) => {
+    const response = await this.register(credentials);
 
     this.validateResponse(response);
 
-    const decryptedResponseBody = await this.decrypteResponseBody(
-      response.data,
-      noncePrivateKey
-    );
+    await this.storeUserKeys(response.data);
 
-    this.convertResponseAndStoreKeys(decryptedResponseBody);
+    return;
   };
 
   private encrypteRequestBody = async (
@@ -38,10 +29,7 @@ class RegisterService extends RegisterApiService {
     privateKey: string
   ): Promise<string> => {
     return await encryptionService.encryptWithServerPublicKey(
-      await rsaService.encryptWithPrivateKey(
-        privateKey,
-        JSON.stringify(credentials)
-      )
+      await rsaService.encrypt(privateKey, JSON.stringify(credentials))
     );
   };
 
@@ -62,13 +50,14 @@ class RegisterService extends RegisterApiService {
     );
   };
 
-  private convertResponseAndStoreKeys = (decryptedResponseBody: string) => {
-    const keys = JSON.parse(decryptedResponseBody);
-    this.storeUserKeys(keys);
-  };
+  private convertResponseAndStoreKeys = (response: any) => {};
 
-  private storeUserKeys = async (keys: PublicAndPrivateKeyPair) => {
+  private storeUserKeys = (keys: PublicAndPrivateKeyPair) => {
     // need to store it here somehow
+    return Promise.all([
+      storageService.setPrivateKey(keys.privateKey),
+      storageService.setPublicKey(keys.publicKey),
+    ]);
   };
 }
 

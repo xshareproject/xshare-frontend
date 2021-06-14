@@ -12,7 +12,7 @@ import thunk from "redux-thunk";
 export default function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
-  const store = createStore(rootReducer, {}, applyMiddleware(thunk));
+  const store = createStore(rootReducer, applyMiddleware(thunk));
 
   if (!isLoadingComplete) {
     return null;

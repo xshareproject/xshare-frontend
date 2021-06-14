@@ -1,11 +1,9 @@
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationProp } from "@react-navigation/native";
-import { RootStackParamList } from "../types/types";
 
 import Login from "../components/login/Login";
 import { Text, View } from "../components/common/Themed";
-import storageService from "../services/storage/storage.service";
 
 export default function LoginScreen({
   navigation,

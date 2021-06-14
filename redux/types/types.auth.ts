@@ -1,4 +1,5 @@
 export const USER_LOADED = "USER_LOADED";
+export const USER_LOADING = "USER_LOADING";
 export const AUTH_ERROR = "AUTH_ERROR";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAIL = "LOGIN_FAIL";
@@ -17,6 +18,7 @@ export type AuthError = {
 export type AuthModel = {
   token: string | undefined;
   isAuthenticated: boolean;
+  isLoading: boolean;
 };
 
 export type AuthState = {
@@ -25,6 +27,11 @@ export type AuthState = {
 
 interface userLoaded {
   type: typeof USER_LOADED;
+  token: string;
+}
+
+interface userLoading {
+  type: typeof USER_LOADING;
 }
 
 interface loginFail {
@@ -81,6 +88,7 @@ export type AuthAction =
   | loginFail
   | registerFail
   | authError
-  | logoutSuccess;
+  | logoutSuccess
+  | userLoading;
 
 export type AuthDispatch = () => void;

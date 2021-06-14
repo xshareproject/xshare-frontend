@@ -23,60 +23,48 @@ class StorageService {
   private readonly PUBLICKEY = "PUBLICKEY";
   private readonly PRIVATEKEY = "PRIVATEKEY";
 
-  // GETTERS
+  public getSSLKey = (): Promise<SSLKey> =>
+    this.storage.load({ key: this.SSLKEY });
 
-  public getSSLKey = (): Promise<SSLKey> => {
-    return this.storage.load({ key: this.SSLKEY });
-  };
+  public getServerPublicKey = (): Promise<ServerPublicKey> =>
+    this.storage.load({ key: this.SERVERPUBLICKEY });
 
-  public getServerPublicKey = (): Promise<ServerPublicKey> => {
-    return this.storage.load({ key: this.SERVERPUBLICKEY });
-  };
+  public getPublicKey = (): Promise<PublicKey> =>
+    this.storage.load({ key: this.PUBLICKEY });
 
-  public getPublicKey = (): Promise<PublicKey> => {
-    return this.storage.load({ key: this.PUBLICKEY });
-  };
+  public getPrivateKey = (): Promise<PrivateKey> =>
+    this.storage.load({ key: this.PRIVATEKEY });
 
-  public getPrivateKey = (): Promise<PrivateKey> => {
-    return this.storage.load({ key: this.PRIVATEKEY });
-  };
-
-  // SETTERS
-
-  public setSSLKey = (sslKey: string) => {
-    return this.storage.save({
+  public setSSLKey = (sslKey: string) =>
+    this.storage.save({
       key: this.SSLKEY,
       data: sslKey,
       expires: null,
     });
-  };
 
-  public setServerPublicKey = (serverPublicKey: string) => {
-    return this.storage.save({
+  public setServerPublicKey = (serverPublicKey: string) =>
+    this.storage.save({
       key: this.SERVERPUBLICKEY,
       data: serverPublicKey,
       expires: null,
     });
-  };
 
-  public setPublicKey = (publicKey: string) => {
-    return this.storage.save({
+  public setPublicKey = (publicKey: string) =>
+    this.storage.save({
       key: this.PUBLICKEY,
       data: publicKey,
       expires: null,
     });
-  };
 
-  public setPrivateKey = (privateKey: string) => {
-    return this.storage.save({
+  public setPrivateKey = (privateKey: string) =>
+    this.storage.save({
       key: this.PRIVATEKEY,
       data: privateKey,
       expires: null,
     });
-  };
 
-  public isSetUpRequired = async (): Promise<boolean> => {
-    return this.storage
+  public isSetUpRequired = async (): Promise<boolean> =>
+    this.storage
       .getBatchData([{ key: this.SSLKEY }, { key: this.SERVERPUBLICKEY }])
       .then((values: any[]) => {
         return values.length === 0;
@@ -84,7 +72,6 @@ class StorageService {
       .catch(() => {
         return true;
       });
-  };
 }
 
 export default new StorageService();

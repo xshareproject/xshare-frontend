@@ -1,23 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet } from "react-native";
 import { Text, View } from "../components/common/Themed";
-import { TextInput } from "react-native-gesture-handler";
-import { Button } from "react-native-elements";
-import { useDispatch, useSelector } from "react-redux";
+import { Button, Input } from "react-native-elements";
+import { connect } from "react-redux";
+import { NavigationProp } from "@react-navigation/core";
 
-import { AuthModel, AuthState } from "../redux/types/types.auth";
-import { Credentials } from "../services/register/register.interface";
 import { register } from "../redux/auth/auth.actions";
+import { RegisterCredentials } from "../services/register/register.interface";
 
-const RegistrationScreen = () => {
-  const dispatch = useDispatch();
+interface Props {
+  navigation: NavigationProp<any>;
+  register: (credentials: RegisterCredentials) => void;
+}
 
-  const isAuthenticated = useSelector<AuthState, AuthModel["isAuthenticated"]>(
-    (state) => state.auth.isAuthenticated
-  );
-
-  const [isLoading, setLoading] = useState(false);
-
+const RegistrationScreen = ({ navigation, register }: Props) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -25,7 +21,7 @@ const RegistrationScreen = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
 
   const registerUser = () => {
-    const credentials: Credentials = {
+    const credentials: RegisterCredentials = {
       firstName,
       lastName,
       email,
@@ -33,34 +29,60 @@ const RegistrationScreen = () => {
       phoneNumber,
     };
 
-    dispatch(register(credentials));
+    register(credentials);
+  };
+
+  const toLoginScreen = () => {
+    navigation.navigate("Register");
   };
 
   return (
-    <View style={styles.container} pointerEvents={isLoading ? "none" : "auto"}>
-      <Text>Welcome to Share</Text>
-      <Text>Create an Account</Text>
-      <TextInput
+    <View style={styles.container}>
+      <Text style={styles.title}>Welcome to Share</Text>
+      <Text style={styles.title}>Create an Account</Text>
+      <View
+        style={styles.separator}
+        lightColor="#eee"
+        darkColor="rgba(255,255,255,0.1)"
+      />
+      <Input
         placeholder="First Name"
+        containerStyle={styles.input}
+        style={styles.inputText}
         onChange={(event) => setFirstName(event.nativeEvent.text)}
       />
-      <TextInput
+      <Input
         placeholder="Last Name"
+        containerStyle={styles.input}
+        style={styles.inputText}
         onChange={(event) => setLastName(event.nativeEvent.text)}
       />
-      <TextInput
+      <Input
         placeholder="Email"
+        containerStyle={styles.input}
+        style={styles.inputText}
         onChange={(event) => setEmail(event.nativeEvent.text)}
       />
-      <TextInput
+      <Input
         placeholder="Password"
+        containerStyle={styles.input}
+        style={styles.inputText}
         onChange={(event) => setPassword(event.nativeEvent.text)}
       />
-      <TextInput
+      <Input
         placeholder="Phone Number"
+        containerStyle={styles.input}
+        style={styles.inputText}
         onChange={(event) => setPhoneNumber(event.nativeEvent.text)}
       />
-      <Button title="Register" disabled={isLoading} />
+      <View>
+        <Button title="Register" onPress={registerUser} />
+        <Button
+          containerStyle={{ marginTop: "10%" }}
+          title="To Login"
+          onPress={toLoginScreen}
+        />
+      </View>
     </View>
   );
 };
@@ -71,6 +93,30 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  separator: {
+    marginVertical: 30,
+    height: 1,
+    width: "80%",
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  input: {
+    borderWidth: 1,
+    width: "80%",
+  },
+  inputText: {
+    color: "white",
+  },
 });
 
-export default RegistrationScreen;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    register: (credentials: RegisterCredentials) => {
+      dispatch(register(credentials));
+    },
+  };
+};
+
+export default connect(null, mapDispatchToProps)(RegistrationScreen);

@@ -1,27 +1,20 @@
-import React, { useState, useCallback, useEffect, Dispatch } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { StyleSheet } from "react-native";
 import { Input, Icon, Button } from "react-native-elements";
-import { useDispatch } from "react-redux";
+import { connect, useDispatch } from "react-redux";
+import { Dispatch } from "redux";
 
 import { Text, View } from "../common/Themed";
+import { login } from "../../redux/auth/auth.actions";
+import { Credentials } from "../../services/register/register.interface";
 
-const Login = ({
-  path,
-  navigateToRegister,
-}: {
-  path: string;
-  navigateToRegister: Function;
-}) => {
-  const dispatch = useDispatch();
+const Login = (props) => {
+  console.log(props);
 
-  const [isLoading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const validateLogin = () => {
-    setLoading(true);
-    setLoading(false);
-  };
+  const validateLogin = () => {};
 
   return (
     <View style={styles.container}>
@@ -46,24 +39,16 @@ const Login = ({
           leftIcon={<Icon name="locked" type="fontisto" size={15} />}
         />
       </View>
-      <View
-        style={{
-          marginTop: "5%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-      >
+      <View style={{ marginTop: "5%" }}>
         <Button
           title="Login"
-          disabled={isLoading}
           onPress={() => {
             validateLogin();
           }}
         />
         <Button
-          title="Register"
-          onPress={() => navigateToRegister()}
+          containerStyle={{ marginTop: "10%" }}
+          title="To Register"
           style={{ backgroundColor: "red" }}
         />
       </View>
@@ -84,4 +69,12 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Login;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    login: (credentials: Credentials) => {
+      dispatch(login(credentials));
+    },
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Login);

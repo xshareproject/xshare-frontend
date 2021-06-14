@@ -14,7 +14,8 @@ import {
 
 const AUTH_INITIAL_STATE: AuthModel = {
   token: undefined,
-  isAuthenticated: undefined,
+  isAuthenticated: false,
+  isLoading: false,
 };
 
 export const authReducer = (
@@ -27,6 +28,13 @@ export const authReducer = (
         ...state,
         isAuthenticated: true,
       };
+    case USER_LOADING: {
+      return {
+        ...state,
+        isAuthenticated: false,
+        isLoading: true,
+      };
+    }
     case LOGIN_SUCCESS:
     case REGISTER_SUCCESS:
       return {

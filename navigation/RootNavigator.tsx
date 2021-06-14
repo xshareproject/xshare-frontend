@@ -29,8 +29,8 @@ const RootNavigator = () => {
         </>
       ) : (
         <>
-          <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Register" component={RegistrationScreen} />
+          <Stack.Screen name="Login" component={LoginScreen} />
         </>
       )}
     </Stack.Navigator>
