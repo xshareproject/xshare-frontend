@@ -22,8 +22,6 @@ export default class TransactionsOverviewScreen extends React.Component<Transact
   }  
 
   render(){
-    //getTransactionByLender should take in a value from data store and not hard-coded string
-    //change in context here (or to be exact, the transactions object) does not trigger re-rendering of component
     return (
       <View style={styles.container}>
           <View style = {styles.topBar}>

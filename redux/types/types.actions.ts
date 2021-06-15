@@ -99,11 +99,16 @@ export const UPDATE_TRANSACTION_BY_PROPERTY = 'UPDATE_TRANSACTION_BY_PROPERTY';
 export const UPDATE_TRANSACTION_TYPE = 'UPDATE_TRANSACTION_TYPE';
 export const DELETE_TRANSACTION = 'DELETE_TRANSACTION';
 export const LOAD_TRANSACTIONS = 'LOAD_TRANSACTIONS';
+export const DEFAULT_TRANSACTION = 'DEFAULT_TRANSACTION';
+
+export interface createTransactionAction {
+    type: typeof CREATE_TRANSACTION,
+    newTransaction: Transaction
+}
 
 export interface loadTransactionsAction {
     type: typeof LOAD_TRANSACTIONS
 }
-
 
 export interface updateTransactionTypeAction {
     type: typeof UPDATE_TRANSACTION_TYPE,
@@ -123,9 +128,11 @@ export interface updateTransactionByPropertyAction {
     value: any
 }
 
-export type TransactionActionTypes = loadTransactionsAction | updateTransactionTypeAction | updateTransactionAction | updateTransactionByPropertyAction;
+export interface defaultTransactionAction {
+    type: typeof DEFAULT_TRANSACTION
+}
 
-
+export type TransactionActionTypes = createTransactionAction | loadTransactionsAction | updateTransactionTypeAction | updateTransactionAction | updateTransactionByPropertyAction | defaultTransactionAction;
 
 //Add more as we expand our redux
 export type AppActions = ContactTransactionPairActionTypes | TransactionActionTypes | ContactActionTypes
