@@ -1,16 +1,21 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { StyleSheet } from "react-native";
 import { Input, Icon, Button } from "react-native-elements";
-import { connect, useDispatch } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { Dispatch } from "redux";
 
 import { Text, View } from "../common/Themed";
-import { login } from "../../redux/auth/auth.actions";
+import AuthActionService from "../../redux/auth/auth.actions";
 import { Credentials } from "../../services/register/register.interface";
+import { AuthModel, AuthState } from "../../redux/types/types.auth";
 
-const Login = (props) => {
-  console.log(props);
+interface Props {
+  navigateToRegister: () => void;
+  path: string;
+  login: (credentials: Credentials) => void;
+}
 
+const Login = (props: Props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -72,7 +77,7 @@ const styles = StyleSheet.create({
 const mapDispatchToProps = (dispatch) => {
   return {
     login: (credentials: Credentials) => {
-      dispatch(login(credentials));
+      dispatch(AuthActionService.login(credentials));
     },
   };
 };

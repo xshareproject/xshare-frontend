@@ -1,10 +1,6 @@
 import { Dispatch } from "redux";
 
 import {
-  Credentials,
-  RegisterCredentials,
-} from "../../services/register/register.interface";
-import {
   AUTH_ERROR,
   USER_LOADED,
   LOGIN_FAIL,
@@ -14,50 +10,57 @@ import {
   LOGOUT_SUCCESS,
   AuthAction,
   USER_LOADING,
+  GET_ERRORS,
 } from "../types/types.auth";
-import registerService from "../../services/register/register.service";
+import {
+  Credentials,
+  RegisterCredentials,
+} from "../../services/register/register.interface";
+import RegisterService from "../../services/register/register.service";
+import LoginService from "../../services/login/login.service";
 
-const userLoading = (): AuthAction => ({ type: USER_LOADING });
+class AuthActionService {
+  private userLoading = (): AuthAction => ({ type: USER_LOADING });
 
-const userLoaded = (authToken: string): AuthAction => ({
-  type: USER_LOADED,
-  token: authToken,
-});
+  private userLoaded = (authToken: string): AuthAction => ({
+    type: USER_LOADED,
+    token: authToken,
+  });
 
-const registerSuccess = (payload: any): AuthAction => ({
-  type: REGISTER_SUCCESS,
-  payload: payload,
-});
+  private authError = (message?: string, status?: number): AuthAction => ({
+    type: GET_ERRORS,
+    message,
+    status,
+  });
 
-const loadingSuccess = (payload: any): AuthAction => ({
-  type: LOGIN_SUCCESS,
-  payload: payload,
-});
-
-export const login = (credentials: Credentials) => {
-  return (dispatch: Dispatch) => {
-    dispatch(userLoading());
+  public login = (credentials: Credentials) => {
+    return (dispatch: Dispatch) => {
+      dispatch(this.userLoading());
+    };
   };
-};
 
-export const register = (credentials: RegisterCredentials) => {
-  return (dispatch: Dispatch) => {
-    dispatch(userLoading());
-    registerService
-      .registerUser(credentials)
-      .then(() => {
-        console.log("register success");
-        // login here
-      })
-      .catch((error) => {
-        console.log("register error");
-        console.log(error);
-      });
+  public register = (credentials: RegisterCredentials) => {
+    return async (dispatch: Dispatch) => {
+      dispatch(this.userLoading());
+      try {
+        await RegisterService.registerUser(credentials);
+        const authToken = LoginService.login(
+          credentials.email,
+          credentials.password
+        );
+        dispatch(this.userLoaded(authToken.token));
+      } catch (error) {
+        // parse the error here
+        dispatch(this.authError(error.message, error.status));
+      }
+    };
   };
-};
 
-export const logout = (): AuthAction => {
-  console.log("logout");
+  public logout = (): AuthAction => {
+    console.log("logout");
 
-  return { type: LOGOUT_SUCCESS };
-};
+    return { type: LOGOUT_SUCCESS };
+  };
+}
+
+export default new AuthActionService();

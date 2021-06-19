@@ -1,13 +1,7 @@
 import { ILoginService, AuthToken } from "./login.interface";
 
-export default class LoginService implements ILoginService {
+class LoginService implements ILoginService {
   private response: object | null = null;
-
-  private clearResponse = () => {
-    this.response = null;
-  };
-
-  public getResponse = (): object | null => this.response;
 
   private initiateLoginSession = async () => {};
 
@@ -19,3 +13,5 @@ export default class LoginService implements ILoginService {
     return { token: "" };
   };
 }
+
+export default new LoginService();

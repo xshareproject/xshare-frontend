@@ -10,7 +10,7 @@ class ApiService {
     params?: ParamsTypes
   ): Promise<AxiosResponse<any>> => {
     const url = this.BASE_URL + path;
-    return Axios.post(url, body, { params: params });
+    return Axios.post(url, body, { params: params, headers: {} });
   };
 
   public get = (
@@ -18,7 +18,6 @@ class ApiService {
     params?: ParamsTypes
   ): Promise<AxiosResponse<any>> => {
     const url = this.BASE_URL + path;
-    console.log(url);
     return Axios.get(url, { params: params });
   };
 
@@ -32,4 +31,4 @@ class ApiService {
   };
 }
 
-export default ApiService;
+export default new ApiService();

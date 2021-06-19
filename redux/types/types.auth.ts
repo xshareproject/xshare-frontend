@@ -10,11 +10,6 @@ export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
 export const GET_ERRORS = "GET_ERRORS";
 
-export type AuthError = {
-  errorMessage: object | undefined;
-  status: number | undefined;
-};
-
 export type AuthModel = {
   token: string | undefined;
   isAuthenticated: boolean;
@@ -50,14 +45,6 @@ interface logoutSuccess {
   type: typeof LOGOUT_SUCCESS;
 }
 
-interface loginSuccess extends authSuccess {
-  type: typeof LOGIN_SUCCESS;
-}
-
-interface registerSuccess extends authSuccess {
-  type: typeof REGISTER_SUCCESS;
-}
-
 interface getErrorsAction extends errorAction {
   type: typeof GET_ERRORS;
 }
@@ -67,28 +54,18 @@ interface clearErrorsAction extends errorAction {
 }
 
 interface errorAction {
-  message: object | undefined;
+  message: string | undefined;
   status: number | undefined;
 }
 
-interface authSuccess {
-  payload: authPayload;
-}
-
-interface authPayload {
-  token: string | undefined;
-}
-
-export type AuthErrorAction = getErrorsAction | clearErrorsAction;
-
 export type AuthAction =
   | userLoaded
-  | loginSuccess
-  | registerSuccess
   | loginFail
   | registerFail
   | authError
   | logoutSuccess
-  | userLoading;
+  | userLoading
+  | getErrorsAction
+  | clearErrorsAction;
 
 export type AuthDispatch = () => void;

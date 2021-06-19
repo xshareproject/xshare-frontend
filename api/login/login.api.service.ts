@@ -1,7 +1,5 @@
 import ApiService from "../api.serivce";
 
-abstract class LoginApiService {
-  private readonly apiService = new ApiService();
-}
+abstract class LoginApiService {}
 
 export default LoginApiService;

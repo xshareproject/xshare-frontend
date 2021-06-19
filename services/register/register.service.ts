@@ -11,9 +11,10 @@ import {
   Credentials,
   WithNoncePublic,
   RegisterCredentials,
+  IRegisterService,
 } from "./register.interface";
 
-class RegisterService extends RegisterApiService {
+class RegisterService extends RegisterApiService implements IRegisterService {
   public registerUser = async (credentials: RegisterCredentials) => {
     const response = await this.register(credentials);
 
@@ -55,8 +56,8 @@ class RegisterService extends RegisterApiService {
   private storeUserKeys = (keys: PublicAndPrivateKeyPair) => {
     // need to store it here somehow
     return Promise.all([
-      storageService.setPrivateKey(keys.privateKey),
-      storageService.setPublicKey(keys.publicKey),
+      storageService.storePrivateKey(keys.privateKey),
+      storageService.storePublicKey(keys.publicKey),
     ]);
   };
 }

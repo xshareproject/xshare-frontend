@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet } from "react-native";
 import { Text, View } from "../components/common/Themed";
 import { Button, Input } from "react-native-elements";
-import { connect } from "react-redux";
+import { connect, MapDispatchToProps } from "react-redux";
 import { NavigationProp } from "@react-navigation/core";
 
-import { register } from "../redux/auth/auth.actions";
+import AuthActionService from "../redux/auth/auth.actions";
 import { RegisterCredentials } from "../services/register/register.interface";
 
 interface Props {
@@ -21,15 +21,13 @@ const RegistrationScreen = ({ navigation, register }: Props) => {
   const [phoneNumber, setPhoneNumber] = useState("");
 
   const registerUser = () => {
-    const credentials: RegisterCredentials = {
+    register({
       firstName,
       lastName,
       email,
       password,
       phoneNumber,
-    };
-
-    register(credentials);
+    });
   };
 
   const toLoginScreen = () => {
@@ -112,9 +110,10 @@ const styles = StyleSheet.create({
 });
 
 const mapDispatchToProps = (dispatch) => {
+  console.log(typeof dispatch);
   return {
     register: (credentials: RegisterCredentials) => {
-      dispatch(register(credentials));
+      dispatch(AuthActionService.register(credentials));
     },
   };
 };

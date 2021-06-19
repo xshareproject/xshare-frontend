@@ -23,6 +23,11 @@ class StorageService {
   private readonly PUBLICKEY = "PUBLICKEY";
   private readonly PRIVATEKEY = "PRIVATEKEY";
 
+  private sslKey: string = "";
+  private privateKey: string = "";
+  private publicKey: string = "";
+  private serverPublicKey: string = "";
+
   public getSSLKey = (): Promise<SSLKey> =>
     this.storage.load({ key: this.SSLKEY });
 
@@ -35,28 +40,48 @@ class StorageService {
   public getPrivateKey = (): Promise<PrivateKey> =>
     this.storage.load({ key: this.PRIVATEKEY });
 
-  public setSSLKey = (sslKey: string) =>
+  public loadSSLKey = async (): Promise<void> => {
+    const res = await this.getSSLKey();
+    this.sslKey = res.SSL_KEY;
+  };
+
+  public loadServerPublicKey = async (): Promise<void> => {
+    const res = await this.getServerPublicKey();
+    this.sslKey = res.SERVER_PUBLIC_KEY;
+  };
+
+  public loadPublicKey = async () => {
+    const res = await this.getPublicKey();
+    this.sslKey = res.PUBLIC_KEY;
+  };
+
+  public loadPrivateKey = async () => {
+    const res = await this.getPrivateKey();
+    this.sslKey = res.PRIVATE_KEY;
+  };
+
+  public storeSSLKey = (sslKey: string) =>
     this.storage.save({
       key: this.SSLKEY,
       data: sslKey,
       expires: null,
     });
 
-  public setServerPublicKey = (serverPublicKey: string) =>
+  public storeServerPublicKey = (serverPublicKey: string) =>
     this.storage.save({
       key: this.SERVERPUBLICKEY,
       data: serverPublicKey,
       expires: null,
     });
 
-  public setPublicKey = (publicKey: string) =>
+  public storePublicKey = (publicKey: string) =>
     this.storage.save({
       key: this.PUBLICKEY,
       data: publicKey,
       expires: null,
     });
 
-  public setPrivateKey = (privateKey: string) =>
+  public storePrivateKey = (privateKey: string) =>
     this.storage.save({
       key: this.PRIVATEKEY,
       data: privateKey,

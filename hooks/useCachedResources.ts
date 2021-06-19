@@ -26,9 +26,12 @@ export default function useCachedResources() {
             data: { sslKey, serverPublicKey },
           } = await ClientApiService.getSSLKeyAndServicePublicKey();
 
-          await StorageService.setSSLKey(sslKey);
-          await StorageService.setServerPublicKey(serverPublicKey);
+          await StorageService.storeSSLKey(sslKey);
+          await StorageService.storeServerPublicKey(serverPublicKey);
         }
+
+        await StorageService.loadSSLKey();
+        await StorageService.loadServerPublicKey();
       } catch (e) {
         // We might want to provide this error information to an error reporting service
         console.warn(e);

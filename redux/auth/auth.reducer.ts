@@ -26,6 +26,7 @@ export const authReducer = (
     case USER_LOADED:
       return {
         ...state,
+        token: action.token,
         isAuthenticated: true,
       };
     case USER_LOADING: {
@@ -35,13 +36,6 @@ export const authReducer = (
         isLoading: true,
       };
     }
-    case LOGIN_SUCCESS:
-    case REGISTER_SUCCESS:
-      return {
-        ...state,
-        ...action.payload,
-        isAuthenticated: true,
-      };
     case AUTH_ERROR:
     case LOGIN_FAIL:
     case LOGOUT_SUCCESS:
