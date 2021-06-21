@@ -8,6 +8,7 @@ abstract class RegisterApiService {
 
   public register = (credentials: RegisterCredentials) => {
     const path = this.paths.register;
+
     return ApiService.post(path, credentials);
   };
 }

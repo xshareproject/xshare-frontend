@@ -7,6 +7,7 @@ import { NavigationProp } from "@react-navigation/core";
 
 import AuthActionService from "../redux/auth/auth.actions";
 import { RegisterCredentials } from "../services/register/register.interface";
+import { AppState } from "../redux/root.reducer";
 
 interface Props {
   navigation: NavigationProp<any>;
@@ -109,8 +110,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapDispatchToProps = (dispatch) => {
-  console.log(typeof dispatch);
+const mapDispatchToProps = (dispatch: Function) => {
   return {
     register: (credentials: RegisterCredentials) => {
       dispatch(AuthActionService.register(credentials));

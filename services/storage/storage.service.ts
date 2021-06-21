@@ -2,13 +2,6 @@ import _ from "lodash";
 import Storage from "react-native-storage";
 import AsyncStorage from "@react-native-community/async-storage";
 
-import {
-  SSLKey,
-  ServerPublicKey,
-  PrivateKey,
-  PublicKey,
-} from "./storage.interface";
-
 class StorageService {
   private readonly storage = new Storage({
     storageBackend: AsyncStorage,
@@ -28,37 +21,17 @@ class StorageService {
   private publicKey: string = "";
   private serverPublicKey: string = "";
 
-  public getSSLKey = (): Promise<SSLKey> =>
+  public getSSLKey = (): Promise<string> =>
     this.storage.load({ key: this.SSLKEY });
 
-  public getServerPublicKey = (): Promise<ServerPublicKey> =>
+  public getServerPublicKey = (): Promise<string> =>
     this.storage.load({ key: this.SERVERPUBLICKEY });
 
-  public getPublicKey = (): Promise<PublicKey> =>
+  public getPublicKey = (): Promise<string> =>
     this.storage.load({ key: this.PUBLICKEY });
 
-  public getPrivateKey = (): Promise<PrivateKey> =>
+  public getPrivateKey = (): Promise<string> =>
     this.storage.load({ key: this.PRIVATEKEY });
-
-  public loadSSLKey = async (): Promise<void> => {
-    const res = await this.getSSLKey();
-    this.sslKey = res.SSL_KEY;
-  };
-
-  public loadServerPublicKey = async (): Promise<void> => {
-    const res = await this.getServerPublicKey();
-    this.sslKey = res.SERVER_PUBLIC_KEY;
-  };
-
-  public loadPublicKey = async () => {
-    const res = await this.getPublicKey();
-    this.sslKey = res.PUBLIC_KEY;
-  };
-
-  public loadPrivateKey = async () => {
-    const res = await this.getPrivateKey();
-    this.sslKey = res.PRIVATE_KEY;
-  };
 
   public storeSSLKey = (sslKey: string) =>
     this.storage.save({

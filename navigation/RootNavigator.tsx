@@ -6,19 +6,20 @@ import BottomTabNavigator from "./BottomTabNavigator";
 import LoginScreen from "../screens/LoginScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import RegistrationScreen from "../screens/RegistrationScreen";
-import { useSelector } from "react-redux";
-import { AuthModel, AuthState } from "../redux/types/types.auth";
+import { connect } from "react-redux";
+import { AppState } from "../redux/root.reducer";
+
+interface Props {
+  isAuthenticated: boolean;
+  isLoading: boolean;
+}
 
 const Stack = createStackNavigator<RootStackParamList>();
 
-const RootNavigator = () => {
-  const isAuthenticated = useSelector<AuthState, AuthModel["isAuthenticated"]>(
-    (state) => state.auth.isAuthenticated
-  );
-
+const RootNavigator = ({ isAuthenticated, isLoading }: Props) => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      {isAuthenticated ? (
+      {isAuthenticated && !isLoading ? (
         <>
           <Stack.Screen name="Root" component={BottomTabNavigator} />
           <Stack.Screen
@@ -37,4 +38,9 @@ const RootNavigator = () => {
   );
 };
 
-export default RootNavigator;
+const mapStateToProps = (state: AppState) => ({
+  isAuthenticated: state.authReducer.isAuthenticated,
+  isLoading: state.authReducer.isLoading,
+});
+
+export default connect(mapStateToProps, null)(RootNavigator);

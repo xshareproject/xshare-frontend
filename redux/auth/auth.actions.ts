@@ -36,6 +36,16 @@ class AuthActionService {
   public login = (credentials: Credentials) => {
     return (dispatch: Dispatch) => {
       dispatch(this.userLoading());
+      try {
+        const authToken = LoginService.login(
+          credentials.email,
+          credentials.password
+        );
+        dispatch(this.userLoaded(authToken.token));
+      } catch (error) {
+        console.log(error.response);
+        dispatch(this.authError(error.message, error.status));
+      }
     };
   };
 
@@ -50,7 +60,7 @@ class AuthActionService {
         );
         dispatch(this.userLoaded(authToken.token));
       } catch (error) {
-        // parse the error here
+        console.log(error.response);
         dispatch(this.authError(error.message, error.status));
       }
     };

@@ -9,8 +9,8 @@ export const rootReducer = combineReducers({
   contactTransactionPairReducer,
   transactionReducer,
   contactReducer,
-  auth: authReducer,
-  authError: authErrorReducer,
+  authReducer,
+  authErrorReducer,
 });
 
 export type AppState = ReturnType<typeof rootReducer>;

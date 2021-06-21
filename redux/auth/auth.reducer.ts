@@ -28,6 +28,7 @@ export const authReducer = (
         ...state,
         token: action.token,
         isAuthenticated: true,
+        isLoading: false,
       };
     case USER_LOADING: {
       return {

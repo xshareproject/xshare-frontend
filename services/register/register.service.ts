@@ -53,11 +53,13 @@ class RegisterService extends RegisterApiService implements IRegisterService {
 
   private convertResponseAndStoreKeys = (response: any) => {};
 
-  private storeUserKeys = (keys: PublicAndPrivateKeyPair) => {
+  private storeUserKeys = (keys: {
+    publicAndPrivateKeyPair: PublicAndPrivateKeyPair;
+  }) => {
     // need to store it here somehow
     return Promise.all([
-      storageService.storePrivateKey(keys.privateKey),
-      storageService.storePublicKey(keys.publicKey),
+      storageService.storePrivateKey(keys.publicAndPrivateKeyPair.privateKey),
+      storageService.storePublicKey(keys.publicAndPrivateKeyPair.publicKey),
     ]);
   };
 }
