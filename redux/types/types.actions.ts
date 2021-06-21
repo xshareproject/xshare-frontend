@@ -1,21 +1,21 @@
 import {Transaction, TRANSACTION_TYPE} from './types.Transaction';
 import {Contact} from './types.contact';
-import { ContactTransactionPair } from './types.ContactTransactionPair';
+import { TransactionStatus } from './types.TransactionStatus';
 
-export const ADD_CONTACT_TO_TRANSACTION = "ADD_CONTACT_TO_TRANSACTION";
+export const ADD_TRANSACTION_STATUS = "ADD_TRANSACTION_STATUS";
 export const ADD_CONTACTS_BY_TRANSACTION_ID = "ADD_CONTACTS_BY_TRANSACTION_ID";
-export const ADD_MULTIPLE_TRANSACTION_PAIRS = "ADD_MULTIPLE_TRANSACTION_PAIRS";
+export const ADD_MULTIPLE_TRANSACTION_STATUS = "ADD_MULTIPLE_TRANSACTION_STATUS";
 export const EDIT_AMOUNT = "EDIT_AMOUNT";
-export const LOAD_CONTACT_TRANSACTION_PAIRS = "LOAD_CONTACT_TRANSACTION_PAIRS";
-export const REMOVE_CONTACT_FROM_TRANSACTION = "REMOVE_CONTACT_FROM_TRANSACTION";
-export const REMOVE_CONTACTS_BY_TRANSACTION_ID = "REMOVE_CONTACTS_BY_TRANSACTION_ID";
+export const LOAD_TRANSACTION_STATUS = "LOAD_TRANSACTION_STATUS";
+export const REMOVE_TRANSACTION_STATUS = "REMOVE_TRANSACTION_STATUS";
+export const REMOVE_TRANSACTION_STATUS_BY_TRANSACTION_ID = "REMOVE_TRANSACTION_STATUS_BY_TRANSACTION_ID";
 
-export interface loadContactTransactionPairsAction {
-    type: typeof LOAD_CONTACT_TRANSACTION_PAIRS
+export interface loadTransactionStatuses {
+    type: typeof LOAD_TRANSACTION_STATUS
 }
 
-export interface addContactToTransactionAction {
-    type: typeof ADD_CONTACT_TO_TRANSACTION,
+export interface addTransactionStatus {
+    type: typeof ADD_TRANSACTION_STATUS,
     contact: Contact,
     transaction: Transaction
 }
@@ -23,16 +23,16 @@ export interface addContactToTransactionAction {
 export interface addContactsByTransactionIdAction {
     type: typeof ADD_CONTACTS_BY_TRANSACTION_ID,
     transactionId: string,
-    contactTransactionPairArr: ContactTransactionPair[] 
+    contactTransactionPairArr: TransactionStatus[] 
 }
 
-export interface removeContactFromTransactionAction {
-    type: typeof REMOVE_CONTACT_FROM_TRANSACTION,
+export interface removeTransactionStatus {
+    type: typeof REMOVE_TRANSACTION_STATUS,
     contactId: string
 }
 
-export interface removeContactsByTransactionIdAction {
-    type: typeof REMOVE_CONTACTS_BY_TRANSACTION_ID,
+export interface removeTransactionStatusByTransactionId {
+    type: typeof REMOVE_TRANSACTION_STATUS_BY_TRANSACTION_ID,
     transactionId: string
 }
 
@@ -42,12 +42,12 @@ export interface editAmountAction {
     amount: number
 }
 
-export interface addMultipleTransactionPairs {
-    type: typeof ADD_MULTIPLE_TRANSACTION_PAIRS,
-    contactTransactionPairs: ContactTransactionPair[]
+export interface addMultipleTransactionStatus {
+    type: typeof ADD_MULTIPLE_TRANSACTION_STATUS,
+    contactTransactionPairs: TransactionStatus[]
 }
 
-export type ContactTransactionPairActionTypes = loadContactTransactionPairsAction | addContactToTransactionAction | addContactsByTransactionIdAction | addMultipleTransactionPairs | removeContactFromTransactionAction | removeContactsByTransactionIdAction |editAmountAction;
+export type TransactionStatusActionTypes = loadTransactionStatuses | addTransactionStatus | addContactsByTransactionIdAction | addMultipleTransactionStatus | removeTransactionStatus | removeTransactionStatusByTransactionId |editAmountAction;
 
 export const READ_CONTACT_BY_ID = "READ_CONTACT_BY_ID";
 export const READ_CONTACT_BY_NAME = "READ_CONTACT_BY_NAME";
@@ -90,7 +90,7 @@ export interface deleteContactAction {
 }
 
 
-export type ContactActionTypes = loadContactsAction | readAllContactsAction | createContactAction | updateContactAction | updateContactByPropertyAction | deleteContactAction | removeContactsByTransactionIdAction;
+export type ContactActionTypes = loadContactsAction | readAllContactsAction | createContactAction | updateContactAction | updateContactByPropertyAction | deleteContactAction | removeTransactionStatusByTransactionId;
 
 //Add more as we expand our redux
 export const CREATE_TRANSACTION = 'CREATE_TRANSACTION';
@@ -99,11 +99,16 @@ export const UPDATE_TRANSACTION_BY_PROPERTY = 'UPDATE_TRANSACTION_BY_PROPERTY';
 export const UPDATE_TRANSACTION_TYPE = 'UPDATE_TRANSACTION_TYPE';
 export const DELETE_TRANSACTION = 'DELETE_TRANSACTION';
 export const LOAD_TRANSACTIONS = 'LOAD_TRANSACTIONS';
+export const DEFAULT_TRANSACTION = 'DEFAULT_TRANSACTION';
+
+export interface createTransactionAction {
+    type: typeof CREATE_TRANSACTION,
+    newTransaction: Transaction
+}
 
 export interface loadTransactionsAction {
     type: typeof LOAD_TRANSACTIONS
 }
-
 
 export interface updateTransactionTypeAction {
     type: typeof UPDATE_TRANSACTION_TYPE,
@@ -123,9 +128,11 @@ export interface updateTransactionByPropertyAction {
     value: any
 }
 
-export type TransactionActionTypes = loadTransactionsAction | updateTransactionTypeAction | updateTransactionAction | updateTransactionByPropertyAction;
+export interface defaultTransactionAction {
+    type: typeof DEFAULT_TRANSACTION
+}
 
-
+export type TransactionActionTypes = createTransactionAction | loadTransactionsAction | updateTransactionTypeAction | updateTransactionAction | updateTransactionByPropertyAction | defaultTransactionAction;
 
 //Add more as we expand our redux
-export type AppActions = ContactTransactionPairActionTypes | TransactionActionTypes | ContactActionTypes
+export type AppActions = TransactionStatusActionTypes | TransactionActionTypes | ContactActionTypes

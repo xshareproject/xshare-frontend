@@ -25,7 +25,7 @@ class TransactionList extends React.Component<TransactionListProps, TransactionL
     constructor(props : TransactionListProps){
         super(props);
         this.state = {
-            transactions: this.props.transactions,
+            transactions: this.props.transactions
         };
     }
     
@@ -55,7 +55,6 @@ class TransactionList extends React.Component<TransactionListProps, TransactionL
     }
     
     render(){
-            // console.log("List: ", this.state.transactions);
             return (
             <View style={styles.container}>
                 <FlatList 

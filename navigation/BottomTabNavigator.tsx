@@ -14,6 +14,7 @@ import ProfileScreen from '../screens/ProfileScreen';
 import LoginScreen from '../screens/LoginScreen';
 
 import TransactionDetailsScreen from '../screens/TransactionDetailsScreen';
+import NewTransactionScreen from '../screens/NewTransactionScreen';
 
 const BottomTab = createBottomTabNavigator();
 // const BottomTab = createBottomTabNavigator<BottomTabParamList>();
@@ -44,6 +45,18 @@ export default function BottomTabNavigator() {
           tabBarIcon: ({ color }) => 
           <Icon 
           name='contacts' 
+          type='ant-design'
+          size= {20}
+          color={color}/>
+        }}
+      />
+      <BottomTab.Screen
+        name="Create"
+        component={NewTransactioNavigation}
+        options={{
+          tabBarIcon: ({ color }) => 
+          <Icon 
+          name='plussquare' 
           type='ant-design'
           size= {20}
           color={color}/>
@@ -151,6 +164,20 @@ function ProfileTabNavigation() {
         options={{ headerShown: false }}
       />
     </ProfileStackNavigator.Navigator>
+  );
+}
+
+const NewTransactionStackNavigator = createStackNavigator();
+
+function NewTransactioNavigation(){
+  return (
+    <NewTransactionStackNavigator.Navigator>
+      <NewTransactionStackNavigator.Screen
+        name="Create Transaction"
+        component={NewTransactionScreen}
+        options={{ headerShown: true}}
+      />
+    </NewTransactionStackNavigator.Navigator>
   );
 }
 

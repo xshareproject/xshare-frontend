@@ -1,7 +1,8 @@
 import { CREATE_TRANSACTION, LOAD_TRANSACTIONS, UPDATE_TRANSACTION, UPDATE_TRANSACTION_BY_PROPERTY, UPDATE_TRANSACTION_TYPE, DELETE_TRANSACTION, AppActions } from '../types/types.actions';
 import {Transaction, TRANSACTION_TYPE} from '../types/types.Transaction';
-import * as lodash from 'lodash';
+import * as _ from 'lodash';
 import { transactionData }from '../transaction/transaction.data';
+import * as axios from 'axios';
 
 const transaction_INITIAL_STATE : Transaction[] = [{
     id: "",
@@ -17,12 +18,15 @@ const transaction_INITIAL_STATE : Transaction[] = [{
     transactionType: TRANSACTION_TYPE.STANDARD
 }]
 
-
 export const transactionReducer = (state = transaction_INITIAL_STATE, action: AppActions) 
 : Transaction[] => {
     switch(action.type) {
         case LOAD_TRANSACTIONS:
             return transactionData;
+        case CREATE_TRANSACTION:
+            let newState = _.cloneDeep(state);
+            newState.push(action.newTransaction);
+            return newState;
         case UPDATE_TRANSACTION_TYPE:
             //find index that wants to change the transactionType
             let index = state.findIndex(transaction => transaction.id === action.transaction.id);
@@ -39,15 +43,14 @@ export const transactionReducer = (state = transaction_INITIAL_STATE, action: Ap
                 ...state.slice(index+1),
             ]
         case UPDATE_TRANSACTION:
-            let transactions = lodash.cloneDeep(state);
+            let transactions = _.cloneDeep(state);
             let transactionId = action.transaction.id;
             let indexTransaction = state.findIndex( (transaction : Transaction) => {return transaction.id == transactionId});
             transactions[indexTransaction] = action.transaction;
 
-            let test =  [
-                ...transactions,
+            return [
+                ...transactions
             ];
-            return test;
         case UPDATE_TRANSACTION_BY_PROPERTY:
             let indexProperty = state.findIndex(transaction => transaction.id == action.id)
             

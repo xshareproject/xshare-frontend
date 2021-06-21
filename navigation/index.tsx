@@ -8,16 +8,16 @@ import BottomTabNavigator from './BottomTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
 import {connect} from 'react-redux';
 import {Dispatch} from 'redux';
-import {LOAD_TRANSACTIONS, LOAD_CONTACTS, LOAD_CONTACT_TRANSACTION_PAIRS} from '../redux/types/types.actions';
+import {LOAD_TRANSACTIONS, LOAD_CONTACTS, LOAD_TRANSACTION_STATUS} from '../redux/types/types.actions';
 
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
-function Navigation({ colorScheme, loadTransactions, loadContacts, loadContactTransactionPairs} : 
-        { colorScheme: ColorSchemeName, loadTransactions: Function, loadContacts: Function, loadContactTransactionPairs: Function }) {
+function Navigation({ colorScheme, loadTransactions, loadContacts, loadTransactionStatuses} : 
+        { colorScheme: ColorSchemeName, loadTransactions: Function, loadContacts: Function, loadTransactionStatuses: Function }) {
   //Load Redux store data at top level component
   loadTransactions();
   loadContacts();
-  loadContactTransactionPairs();
+  loadTransactionStatuses();
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
@@ -30,14 +30,14 @@ function Navigation({ colorScheme, loadTransactions, loadContacts, loadContactTr
 interface DispatchProps {
   loadTransactions: Function,
   loadContacts: Function,
-  loadContactTransactionPairs: Function
+  loadTransactionStatuses: Function
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) : DispatchProps => {
   return {
     loadTransactions: () => dispatch({type: LOAD_TRANSACTIONS}),
     loadContacts: () => dispatch({type: LOAD_CONTACTS}),
-    loadContactTransactionPairs: () => dispatch({type: LOAD_CONTACT_TRANSACTION_PAIRS})
+    loadTransactionStatuses: () => dispatch({type: LOAD_TRANSACTION_STATUS})
   }
 };
 
