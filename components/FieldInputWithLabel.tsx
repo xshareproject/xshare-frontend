@@ -18,7 +18,7 @@ interface FieldInputWithLabelProps{
 export default function FieldInputWithLabel(props : FieldInputWithLabelProps){
     var fieldValue = props.currentObject[props.property];
     var label : string = props.label;
-    var styling = styles.inputField;
+    var styling = styles.inputFieldEditable;
     const [displayDatePicker, setDisplayDatePicker] = React.useState(false);
 
     if (props.property === "paymentDate"){
@@ -64,15 +64,8 @@ export default function FieldInputWithLabel(props : FieldInputWithLabelProps){
 const styles = StyleSheet.create({
     inputFieldEditable: {
         paddingLeft: 5, 
-        backgroundColor: '#ffd700', 
+        backgroundColor: '#ffffff', 
         flex: 1,
         borderBottomWidth: 1
-    },
-    inputField: {
-        paddingLeft: 5,
-        paddingVertical: 10,
-        backgroundColor: '#ffffff',  
-        flex: 1,
-        borderBottomWidth: 1
-    },
+    }
 });

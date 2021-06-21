@@ -5,7 +5,7 @@ import { TouchableHighlight } from 'react-native-gesture-handler';
 import { Avatar } from 'react-native-elements';
 import { Transaction } from '../../redux/types/types.Transaction';
 import { Contact } from '../../redux/types/types.Contact';
-import {PaymentStatus, ContactTransactionPair} from '../../redux/types/types.ContactTransactionPair';
+import {PaymentStatus, TransactionStatus} from '../../redux/types/types.TransactionStatus';
 import {AppState} from '../../redux/root-reducer';
 import { connect } from 'react-redux';
 
@@ -54,11 +54,11 @@ function TransactionCard(props: TransactionCardProps){
 
 
 const mapStateToProps = (state: AppState, ownProps : TransactionCardProps): StateProps => {
-    let contactTransactionPair = state.contactTransactionPairReducer.filter((contactTransactionPair : ContactTransactionPair) => {return contactTransactionPair.transactionId == ownProps.transaction.id });
-    let transactionContacts = contactTransactionPair.map((contactTransactionPair: ContactTransactionPair) => 
-        {return state.contactReducer.find((value) => value.id === contactTransactionPair.contactId)});
+    let transactionStatusArr = state.transactionStatusReducer.filter((transactionStatus : TransactionStatus) => {return transactionStatus.transactionId == ownProps.transaction.id });
+    let transactionContacts = transactionStatusArr.map((transactionStatus: TransactionStatus) => 
+        {return state.contactReducer.find((value) => value.id === transactionStatus.borrowerId)});
 
-    return {transactionContacts};
+    return {transactionContacts: transactionContacts};
 };
 
 export default connect(mapStateToProps)(TransactionCard);

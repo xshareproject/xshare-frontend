@@ -3,12 +3,12 @@ import { combineReducers } from 'redux';
 //import userReducer from './user/user.reducer';
 //import navigationReducer from './navigation/navigation.reducer';
 //import storage from 'redux-persist/lib/storage';
-import {contactTransactionPairReducer} from './contactTransactionPair/contactTransactionPair.reducer';
+import {transactionStatusReducer} from './transactionStatus/transactionStatus.reducer';
 import {transactionReducer} from './transaction/transaction.reducer';
 import {contactReducer} from './contact/contact.reducer';
 
 export const rootReducer = combineReducers({
-    contactTransactionPairReducer,
+    transactionStatusReducer,
     transactionReducer,
     contactReducer
 });
