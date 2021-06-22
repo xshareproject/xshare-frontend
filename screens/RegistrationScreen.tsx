@@ -7,6 +7,7 @@ import { NavigationProp } from "@react-navigation/core";
 
 import AuthActionService from "../redux/auth/auth.actions";
 import { RegisterCredentials } from "../services/register/register.interface";
+import Register from "../components/register/Register";
 
 interface Props {
   navigation: NavigationProp<any>;
@@ -37,46 +38,13 @@ const RegistrationScreen = ({ navigation, register }: Props) => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
-        <Text style={styles.title}>Welcome to Share</Text>
-        <Text style={styles.title}>Create an Account</Text>
+        <Text style={styles.title}>Register</Text>
         <View
           style={styles.separator}
           lightColor="#eee"
           darkColor="rgba(255,255,255,0.1)"
         />
-        <Input
-          placeholder="First Name"
-          containerStyle={styles.input}
-          onChange={(event) => setFirstName(event.nativeEvent.text)}
-        />
-        <Input
-          placeholder="Last Name"
-          containerStyle={styles.input}
-          onChange={(event) => setLastName(event.nativeEvent.text)}
-        />
-        <Input
-          placeholder="Email"
-          containerStyle={styles.input}
-          onChange={(event) => setEmail(event.nativeEvent.text)}
-        />
-        <Input
-          placeholder="Password"
-          containerStyle={styles.input}
-          onChange={(event) => setPassword(event.nativeEvent.text)}
-        />
-        <Input
-          placeholder="Phone Number"
-          containerStyle={styles.input}
-          onChange={(event) => setPhoneNumber(event.nativeEvent.text)}
-        />
-        <View>
-          <Button title="Register" onPress={registerUser} />
-          <Button
-            containerStyle={{ marginTop: "10%" }}
-            title="To Login"
-            onPress={toLoginScreen}
-          />
-        </View>
+        <Register navigateToLogin={toLoginScreen} />
       </View>
     </TouchableWithoutFeedback>
   );
@@ -96,10 +64,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: "bold",
-  },
-  input: {
-    borderWidth: 1,
-    width: "80%",
   },
 });
 
