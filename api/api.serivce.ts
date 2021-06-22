@@ -3,7 +3,7 @@ import { BodyTypes, ParamsTypes, Headers } from "./api.types";
 import StorageService from "../services/storage/storage.service";
 
 class ApiService {
-  private readonly BASE_URL: string = "https://bc145bf19eb5.ngrok.io";
+  private readonly BASE_URL: string = "http://localhost:4000";
 
   private readonly sslKeyPath = "x-ssl-key";
   private readonly authTokenPath = "authorization";
@@ -49,8 +49,6 @@ class ApiService {
       [this.sslKeyPath]: null,
     };
 
-    const sslKey = await StorageService.getSSLKey();
-    console.log(sslKey);
     // load auth token here
 
     switch (path) {
@@ -60,10 +58,10 @@ class ApiService {
       case "/auth/session":
       case "/auth/login":
       case "/auth/complete":
-        headers[this.sslKeyPath] = sslKey;
+        headers[this.sslKeyPath] = await StorageService.getSSLKey();
         break;
       default:
-        headers[this.sslKeyPath] = sslKey;
+        headers[this.sslKeyPath] = await StorageService.getSSLKey();
         headers[this.authTokenPath] = "authTokenHere";
     }
 

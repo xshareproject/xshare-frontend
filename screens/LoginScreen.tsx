@@ -1,34 +1,38 @@
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { NavigationProp } from "@react-navigation/native";
 
 import Login from "../components/login/Login";
 import { Text, View } from "../components/common/Themed";
+import { Credentials } from "../services/register/register.interface";
 
-export default function LoginScreen({
-  navigation,
-}: {
+interface Props {
   navigation: NavigationProp<any>;
-}) {
+  login: (credentials: Credentials) => void;
+}
+
+const LoginScreen = ({ navigation, login }: Props) => {
   const navigateToRegister = () => {
     navigation.navigate("Register");
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
-      <Login
-        path="/screens/Login.tsx"
-        navigateToRegister={navigateToRegister}
-      />
-    </View>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Login</Text>
+        <View
+          style={styles.separator}
+          lightColor="#eee"
+          darkColor="rgba(255,255,255,0.1)"
+        />
+        <Login
+          path="/screens/Login.tsx"
+          navigateToRegister={navigateToRegister}
+        />
+      </View>
+    </TouchableWithoutFeedback>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -46,3 +50,5 @@ const styles = StyleSheet.create({
     width: "80%",
   },
 });
+
+export default LoginScreen;

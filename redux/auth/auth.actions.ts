@@ -34,16 +34,15 @@ class AuthActionService {
   });
 
   public login = (credentials: Credentials) => {
-    return (dispatch: Dispatch) => {
+    return async (dispatch: Dispatch) => {
       dispatch(this.userLoading());
       try {
-        const authToken = LoginService.login(
+        const authToken = await LoginService.login(
           credentials.email,
           credentials.password
         );
         dispatch(this.userLoaded(authToken.token));
       } catch (error) {
-        console.log(error.response);
         dispatch(this.authError(error.message, error.status));
       }
     };
@@ -54,21 +53,18 @@ class AuthActionService {
       dispatch(this.userLoading());
       try {
         await RegisterService.registerUser(credentials);
-        const authToken = LoginService.login(
+        const authToken = await LoginService.login(
           credentials.email,
           credentials.password
         );
         dispatch(this.userLoaded(authToken.token));
       } catch (error) {
-        console.log(error.response);
         dispatch(this.authError(error.message, error.status));
       }
     };
   };
 
   public logout = (): AuthAction => {
-    console.log("logout");
-
     return { type: LOGOUT_SUCCESS };
   };
 }

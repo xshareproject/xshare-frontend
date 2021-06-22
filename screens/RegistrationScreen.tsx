@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { StyleSheet } from "react-native";
+import * as React from "react";
+import { Keyboard, StyleSheet, TouchableWithoutFeedback } from "react-native";
 import { Text, View } from "../components/common/Themed";
 import { Button, Input } from "react-native-elements";
-import { connect, MapDispatchToProps } from "react-redux";
+import { connect } from "react-redux";
 import { NavigationProp } from "@react-navigation/core";
 
 import AuthActionService from "../redux/auth/auth.actions";
 import { RegisterCredentials } from "../services/register/register.interface";
-import { AppState } from "../redux/root.reducer";
 
 interface Props {
   navigation: NavigationProp<any>;
@@ -15,11 +14,11 @@ interface Props {
 }
 
 const RegistrationScreen = ({ navigation, register }: Props) => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [firstName, setFirstName] = React.useState("");
+  const [lastName, setLastName] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [phoneNumber, setPhoneNumber] = React.useState("");
 
   const registerUser = () => {
     register({
@@ -32,57 +31,54 @@ const RegistrationScreen = ({ navigation, register }: Props) => {
   };
 
   const toLoginScreen = () => {
-    navigation.navigate("Register");
+    navigation.navigate("Login");
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Welcome to Share</Text>
-      <Text style={styles.title}>Create an Account</Text>
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
-      <Input
-        placeholder="First Name"
-        containerStyle={styles.input}
-        style={styles.inputText}
-        onChange={(event) => setFirstName(event.nativeEvent.text)}
-      />
-      <Input
-        placeholder="Last Name"
-        containerStyle={styles.input}
-        style={styles.inputText}
-        onChange={(event) => setLastName(event.nativeEvent.text)}
-      />
-      <Input
-        placeholder="Email"
-        containerStyle={styles.input}
-        style={styles.inputText}
-        onChange={(event) => setEmail(event.nativeEvent.text)}
-      />
-      <Input
-        placeholder="Password"
-        containerStyle={styles.input}
-        style={styles.inputText}
-        onChange={(event) => setPassword(event.nativeEvent.text)}
-      />
-      <Input
-        placeholder="Phone Number"
-        containerStyle={styles.input}
-        style={styles.inputText}
-        onChange={(event) => setPhoneNumber(event.nativeEvent.text)}
-      />
-      <View>
-        <Button title="Register" onPress={registerUser} />
-        <Button
-          containerStyle={{ marginTop: "10%" }}
-          title="To Login"
-          onPress={toLoginScreen}
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Welcome to Share</Text>
+        <Text style={styles.title}>Create an Account</Text>
+        <View
+          style={styles.separator}
+          lightColor="#eee"
+          darkColor="rgba(255,255,255,0.1)"
         />
+        <Input
+          placeholder="First Name"
+          containerStyle={styles.input}
+          onChange={(event) => setFirstName(event.nativeEvent.text)}
+        />
+        <Input
+          placeholder="Last Name"
+          containerStyle={styles.input}
+          onChange={(event) => setLastName(event.nativeEvent.text)}
+        />
+        <Input
+          placeholder="Email"
+          containerStyle={styles.input}
+          onChange={(event) => setEmail(event.nativeEvent.text)}
+        />
+        <Input
+          placeholder="Password"
+          containerStyle={styles.input}
+          onChange={(event) => setPassword(event.nativeEvent.text)}
+        />
+        <Input
+          placeholder="Phone Number"
+          containerStyle={styles.input}
+          onChange={(event) => setPhoneNumber(event.nativeEvent.text)}
+        />
+        <View>
+          <Button title="Register" onPress={registerUser} />
+          <Button
+            containerStyle={{ marginTop: "10%" }}
+            title="To Login"
+            onPress={toLoginScreen}
+          />
+        </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -104,9 +100,6 @@ const styles = StyleSheet.create({
   input: {
     borderWidth: 1,
     width: "80%",
-  },
-  inputText: {
-    color: "white",
   },
 });
 

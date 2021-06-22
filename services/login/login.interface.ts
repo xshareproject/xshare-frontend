@@ -1,5 +1,5 @@
 export interface ILoginService {
-  login: (email: string, password: string) => AuthToken;
+  login: (email: string, password: string) => Promise<AuthToken>;
 }
 
 export type AuthToken = {

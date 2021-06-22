@@ -30,7 +30,6 @@ export default function useCachedResources() {
           await StorageService.storeServerPublicKey(serverPublicKey);
         }
       } catch (e) {
-        // We might want to provide this error information to an error reporting service
         console.warn(e);
       } finally {
         setLoadingComplete(true);
