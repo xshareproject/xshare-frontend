@@ -15,6 +15,7 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { createTransaction, defaultTransaction } from '../redux/transaction/transaction.actions';
 import axios from 'axios';
+import DateInputWithLabel from '../components/DateInputWithLabel';
 
 interface NewTransactionProps {
   createTransaction: Function,
@@ -68,9 +69,12 @@ function NewTransactionScreen(props: NewTransactionProps) {
                 <View style={{paddingTop: 20}}></View>
                 <PaymentBreakdown currentTransaction={newTransaction} editable={true} updateContacts={submitTransaction}></PaymentBreakdown>
                 <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-                <FieldInputWithLabel currentObject={newTransaction} property="totalAmount" label="TOTAL AMOUNT" editable={true} valueType="number" onChangeCallback={updateTransaction}/>        
-                <FieldInputWithLabel currentObject={newTransaction} property="note" label="NOTE" editable={true} onChangeCallback={updateTransaction}/>                            
-                <FieldInputWithLabel currentObject={newTransaction} property="paymentDate" label="PAYMENT DEADLINE" editable={true} onChangeCallback={updateTransaction}/>               
+                <FieldInputWithLabel currentObject={newTransaction} property="totalAmount" label="TOTAL AMOUNT" editable={true} 
+                                      valueType="number" onChangeCallback={updateTransaction} inputStyle={styles.inputField} labelStyle = {styles.labelField}/>        
+                <FieldInputWithLabel currentObject={newTransaction} property="note" label="NOTE" editable={true} 
+                                      onChangeCallback={updateTransaction} inputStyle={styles.inputField} labelStyle = {styles.labelField}/>                            
+                <DateInputWithLabel currentObject={newTransaction} property="paymentDate" label="PAYMENT DEADLINE" editable={true}
+                                      onChangeCallback={updateTransaction} inputStyle={styles.inputField} labelStyle = {styles.labelField}/>               
                 <Button title={"Attach Receipt"} titleStyle={{color: 'white'}} buttonStyle={{backgroundColor: APP_SECONDARY_COLOR, marginVertical: 10}}/>              
                 <Button title={"Confirm"} titleStyle={{color: 'black'}} buttonStyle={{backgroundColor: APP_PRIMARY_COLOR}} onPress={onSubmitTransaction}/>
             </KeyboardAvoidingView>
@@ -100,6 +104,15 @@ const styles = StyleSheet.create({
       flexDirection: "row",
       paddingVertical: 15,
       borderTopWidth: 1,
+  },
+  labelField: {
+    borderBottomWidth: 1
+  },
+  inputField: {
+      paddingLeft: 5, 
+      backgroundColor: '#ffffff', 
+      flex: 1,
+      borderBottomWidth: 1
   }
 });
 

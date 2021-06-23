@@ -3,69 +3,38 @@ import { Text, View } from '../components/Themed';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { TextInput, ScrollView} from 'react-native-gesture-handler';
 import { formatDate } from '../utility/utility';
-import { StyleSheet, KeyboardAvoidingView, Platform, Route } from 'react-native';
-
+import { StyleSheet, KeyboardAvoidingView, Platform, Route, StyleProp, TextStyle } from 'react-native';
+import { defaults } from 'lodash';
+import {Transaction} from '../redux/types/types.Transaction';
+import {Contact} from '../redux/types/types.Contact';
 
 interface FieldInputWithLabelProps{
-    currentObject: any,
-    property: string,
+    currentObject: Transaction | Contact,
+    property: keyof Transaction | keyof Contact,
     label: string,
     editable: boolean,
     valueType?: string,
-    onChangeCallback: (property: string, value: any) => void
+    onChangeCallback: (property: keyof Transaction | keyof Contact, value: string | number) => void,
+    labelStyle: StyleProp<TextStyle>,
+    inputStyle: StyleProp<TextStyle>
 }
 
-export default function FieldInputWithLabel(props : FieldInputWithLabelProps){
+var FieldInputWithLabel = (props : FieldInputWithLabelProps) => {
     var fieldValue = props.currentObject[props.property];
     var label : string = props.label;
-    var styling = styles.inputFieldEditable;
-    const [displayDatePicker, setDisplayDatePicker] = React.useState(false);
-
-    if (props.property === "paymentDate"){
-            const options = {year: 'numeric', month: 'short', day: '2-digit' };
-            return (
-            <View>
-                <Text style={{borderBottomWidth: 1}}>{label}</Text>
-                <Text style={styling} 
-                onPress={() => {if (props.editable) setDisplayDatePicker(true); }}>
+    return (
+        <View>
+            <Text style={props.labelStyle}>{label}</Text>
+            <TextInput 
+                style={props.inputStyle} 
+                keyboardType={props.valueType! === 'number' ? "number-pad" : 'default'}
+                onChangeText={(text) => 
+                    props.onChangeCallback(props.property, text)}
+                editable={props.editable}>
                 {fieldValue}  
-                </Text>
-                {displayDatePicker &&  
-                <DateTimePicker
-                    value={new Date(fieldValue)}
-                    mode={'date'}
-                    display="default"
-                    onChange={(event, date) => {
-                            setDisplayDatePicker(false);
-                            props.onChangeCallback(props.property, formatDate(date!)); 
-                        }
-                    }  
-                />}
-            </View> 
-        );
-    }
-    else{
-        return (
-            <View>
-                <Text style={{borderBottomWidth: 1}}>{label}</Text>
-                <TextInput 
-                    style={styling} 
-                    keyboardType={props.valueType! === 'number' ? "number-pad" : 'default'}
-                    onChangeText={(text) => 
-                        props.onChangeCallback(props.property, text)}
-                    editable={props.editable}>
-                    {fieldValue}  
-                </TextInput>
-            </View> 
-        );
-    }
+            </TextInput>
+        </View> 
+    );
 }
 
-const styles = StyleSheet.create({
-    inputFieldEditable: {
-        paddingLeft: 5, 
-        backgroundColor: '#ffffff', 
-        flex: 1,
-        borderBottomWidth: 1
-    }
-});
+export default FieldInputWithLabel;

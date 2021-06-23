@@ -9,7 +9,7 @@ export const transactionStatusReducer =
 : TransactionStatus[] => {
     switch(action.type) {
         case LOAD_TRANSACTION_STATUS:
-            let contactTransactionPairsDefault : TransactionStatus[] = [
+            return [
                 {
                     id: "88d9966b-751c-4bb5-af3f-5e5c493d9eae",
                     transactionId: "122a5aa3-e4aa-4a57-a420-818fed3060f0",
@@ -43,7 +43,6 @@ export const transactionStatusReducer =
                     amountOwned: 20.00,
                 }
             ];
-            return contactTransactionPairsDefault;        
         case ADD_TRANSACTION_STATUS:
             let transactionId = action.transaction.id;
             let newTransactionStatus : TransactionStatus = {

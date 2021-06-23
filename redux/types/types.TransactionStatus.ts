@@ -1,10 +1,10 @@
 export enum PaymentStatus {
-    Pending,
-    Cancelled,
-    Completed,
-    Accepted, 
-    Declined, 
-    Delayed
+    Pending = "Pending",
+    Cancelled = "Cancelled",
+    Completed = "Completed",
+    Accepted = "Accepted", 
+    Declined = "Declined", 
+    Delayed = "Delayed"
 }
 
 export interface TransactionStatus {

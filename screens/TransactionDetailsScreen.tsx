@@ -16,6 +16,7 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { Transaction } from '../redux/types/types.Transaction';
 import { updateTransaction, updateTransactionType } from '../redux/transaction/transaction.actions';
+import DateInputWithLabel from '../components/DateInputWithLabel';
 
 interface DispatchProps {
     updateTransaction: Function,
@@ -155,12 +156,15 @@ export class TransactionDetailsScreen extends React.Component<TransactionDetails
 
                     <ScrollView style={styles.container}>
                         <KeyboardAvoidingView behavior={Platform.OS == 'android' ? 'height' : 'position'}>
-                            <FieldInputWithLabel currentObject={this.state.editedTransaction} property="paymentDate" label="PAYMENT DEADLINE" editable={this.state.editable} onChangeCallback={this.updateEditedTransaction}/>                            
-                            <FieldInputWithLabel currentObject={this.state.editedTransaction} property="note" label="NOTE" editable={this.state.editable} onChangeCallback={this.updateEditedTransaction}/>                            
+                            <DateInputWithLabel currentObject={this.state.editedTransaction} property="paymentDate" label="PAYMENT DEADLINE" editable={this.state.editable} 
+                                                onChangeCallback={this.updateEditedTransaction} inputStyle = {styles.inputField} labelStyle={styles.labelField}/>                            
+                            <FieldInputWithLabel currentObject={this.state.editedTransaction} property="note" label="NOTE" editable={this.state.editable} 
+                                                onChangeCallback={this.updateEditedTransaction} inputStyle = {styles.inputField} labelStyle={styles.labelField}/>                            
                             <PaymentBreakdown currentTransaction={this.state.editedTransaction} editable={this.state.editable} updateContacts={this.state.saveChanges}></PaymentBreakdown>
                             <Text style={this.state.transactionType === TRANSACTION_TYPE.MEAL ? null : {display: 'none'}}>Tax: 12%, Tips: 5%</Text>
                             <Button title={"Recurring Details"} titleStyle={{color: 'black'}} containerStyle={this.state.transactionType === TRANSACTION_TYPE.RECURRING ? null : {display: 'none'}}/>
-                            <FieldInputWithLabel currentObject={this.state.editedTransaction} property="totalAmount" label="TOTAL AMOUNT" editable={this.state.editable} onChangeCallback={this.updateEditedTransaction}/>        
+                            <FieldInputWithLabel currentObject={this.state.editedTransaction} property="totalAmount" label="TOTAL AMOUNT" editable={this.state.editable} 
+                                                onChangeCallback={this.updateEditedTransaction} inputStyle = {styles.inputField} labelStyle={styles.labelField}/>        
                             <RecurrencePicker></RecurrencePicker>
                             <Button title={"Complete Payment"} titleStyle={{color: 'black'}} buttonStyle={{backgroundColor: APP_PRIMARY_COLOR}}/>
                         </KeyboardAvoidingView>
@@ -179,6 +183,15 @@ const styles = StyleSheet.create({
         flex: .2,
         flexDirection: 'column',
         paddingTop: 50
+    },
+    labelField: {
+      borderBottomWidth: 1
+    },
+    inputField: {
+        paddingLeft: 5, 
+        backgroundColor: '#ffffff', 
+        flex: 1,
+        borderBottomWidth: 1
     }
 });
 
